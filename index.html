@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão de Projetos e Demandas TI | Painel de Gestão</title>
+<style>
+:root{--navy:#102b55;--blue:#1769aa;--cyan:#eaf3fb;--green:#16a765;--yellow:#f2c94c;--red:#dc5555;--ink:#1d2939;--muted:#667085;--line:#e4e9f0;--bg:#f4f6fa;--white:#fff;--shadow:0 8px 28px rgba(16,43,85,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(115deg,#102b55,#17477c);color:#fff;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px}.logo{width:42px;height:42px;border-radius:12px;background:#ffffff20;display:grid;place-items:center;font-size:22px}.brand h1{font-size:21px;margin:0;letter-spacing:.3px}.brand p{margin:4px 0 0;color:#d5e4f5;font-size:12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:650;cursor:pointer;font-size:13px;transition:.15s}.btn:hover{filter:brightness(.96);transform:translateY(-1px)}.primary{background:#1673c7;color:white}.light{background:#fff;color:var(--navy)}.outline{background:transparent;color:#fff;border:1px solid #ffffff70}.danger{background:#fff0f0;color:#b42318}.small{padding:7px 10px;font-size:12px}
+main{max-width:1500px;margin:24px auto;padding:0 22px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px;flex-wrap:wrap}.toolbar h2{font-size:19px;margin:0}.toolbar p{color:var(--muted);font-size:12px;margin:4px 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;margin-bottom:13px}.metric{background:white;border:1px solid var(--line);border-radius:10px;padding:10px 13px;box-shadow:0 1px 5px #102b5508;min-width:0}.metric-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;gap:7px}.metric .num{font-size:22px;font-weight:750;margin-top:5px;color:var(--navy);line-height:1.15}.metric .hint{font-size:10px;color:var(--muted);margin-top:3px}.metric-icon{width:27px;height:27px;border-radius:8px;background:var(--cyan);display:grid;place-items:center;color:var(--blue);font-size:14px;flex:0 0 auto}
+.page-tabs{display:flex;gap:8px;margin:0 0 18px;border-bottom:1px solid var(--line);padding-bottom:10px}.page-tab{border:1px solid var(--line);background:#fff;color:#475467;border-radius:8px;padding:10px 15px;font-weight:650;font-size:13px;cursor:pointer}.page-tab.active{background:#eaf3fb;border-color:#b8d5ef;color:#145b91}.page-tab:hover{background:#f4f8fc}
+.gantt-panel{margin:0}.gantt-heading{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:17px 18px;border-bottom:1px solid var(--line)}.gantt-heading h2{font-size:17px;margin:0}.gantt-heading p{font-size:11px;color:var(--muted);margin:5px 0 0}.gantt-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:10px;color:#667085}.gantt-legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:-7px}.legend-blue{background:#2384c6}.legend-green{background:#16a765}.legend-red{background:#dc5555}.gantt-wrap{padding:14px 16px;overflow-x:auto}.gantt-empty{color:#667085;text-align:center;padding:28px;font-size:13px}.gantt-task-row{background:#fafbfd;border-top:1px dashed #e5eaf1}.gantt-task-row .gantt-track{background:#f5f7fa}.gantt-row{display:grid;grid-template-columns:minmax(190px,250px) minmax(450px,1fr);gap:14px;align-items:center;min-width:700px;padding:9px 0;border-bottom:1px solid #edf0f4}.gantt-name{font-size:12px;font-weight:650;color:#344054;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gantt-dates{font-size:10px;color:#98a2b3;margin-top:3px}.gantt-track{height:22px;background:repeating-linear-gradient(to right,#f7f9fc 0,#f7f9fc calc(10% - 1px),#e8edf3 calc(10% - 1px),#e8edf3 10%);border-radius:5px;position:relative}.gantt-bar{height:14px;position:absolute;top:4px;border-radius:5px;min-width:4px;color:#fff!important;font-size:10px;font-weight:800;line-height:14px;padding:0 5px;overflow:hidden;white-space:nowrap;text-shadow:0 1px 2px #102b55,0 0 3px #102b55}.gantt-bar.status-andamento{background:#2384c6}.gantt-bar.status-concluido{background:#16a765}.gantt-bar.status-atrasado{background:#dc5555}.gantt-bar.status-pendente{background:#d2a52d}.gantt-bar.status-cancelado{background:#98a2b3}.gantt-axis{display:grid;grid-template-columns:minmax(190px,250px) minmax(450px,1fr);gap:14px;min-width:700px;margin-bottom:5px}.gantt-axis-label{display:flex;justify-content:space-between;font-size:10px;color:#667085;padding:0 2px}
+.panel{background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 2px 8px #102b5508;overflow:hidden}.filters{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.metric-toolbar{display:flex;justify-content:flex-end;align-items:center;margin:-5px 0 8px;gap:7px}
+.sort-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.sort-controls label{font-size:11px;color:var(--muted);font-weight:650}
+.sort-controls .field{min-width:155px;padding:7px 9px;font-size:12px}
+.sort-direction{border:1px solid var(--line);background:#fff;border-radius:7px;padding:7px 9px;font-size:12px;color:#344054;cursor:pointer}
+.sort-direction:hover{background:#f4f8fc}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{background:#eef4fa;color:#1769aa}
+th.sortable .sort-indicator{margin-left:4px;color:#1769aa}
+.field{border:1px solid #d5dce6;border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink);font:inherit;font-size:13px;min-width:140px}.search{min-width:230px;flex:1}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:980px}th{background:#f8fafc;color:#475467;font-size:11px;text-transform:uppercase;letter-spacing:.45px;text-align:left;padding:12px 13px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:13px;border-bottom:1px solid #edf0f4;font-size:13px;vertical-align:middle}tr:last-child td{border-bottom:0}.project-row:hover{background:#fbfdff}.project-name{font-weight:700;color:#17375e}.sub-count{font-size:11px;color:var(--muted);margin-top:4px}.owner{font-weight:600}.priority{font-size:11px;font-weight:700}.priority.Alta,.priority.Mandatória{color:#c0392b}.priority.Média{color:#b7791f}.priority.Baixa{color:#23764f}
+.initiative-type{display:inline-flex;align-items:center;padding:6px 9px;border-radius:7px;font-size:10px;font-weight:800;letter-spacing:.25px;white-space:nowrap}.initiative-type.project{background:#eeeaff;color:#5949b2;border:1px solid #d9d1ff}.initiative-type.demand{background:#e8f2ff;color:#1769aa;border:1px solid #c9e1f7}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}.pill:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.status-concluido{background:#e8f7ef;color:#12834f}.status-andamento{background:#e8f2ff;color:#1769aa}.status-pendente{background:#fff7df;color:#9b7100}.status-atrasado{background:#fff0f0;color:#c0392b}.status-cancelado{background:#eef0f3;color:#667085}
+.progress{height:7px;background:#edf0f4;border-radius:10px;overflow:hidden;min-width:90px}.progress span{display:block;height:100%;background:#1686c9;border-radius:10px}.progress-label{font-size:11px;color:var(--muted);margin-top:5px}
+.row-actions{display:flex;gap:5px}.icon-btn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 8px;cursor:pointer;color:#475467}.icon-btn:hover{background:#f1f6fb}.empty{text-align:center;padding:45px 15px;color:var(--muted)}.empty b{display:block;color:var(--ink);margin-bottom:5px}
+.subtasks{background:#f8fafc}.subtasks td{padding:8px 13px 8px 42px;font-size:12px}.subtask-line{display:flex;align-items:center;gap:10px}.subtask-line:before{content:"↳";color:#98a2b3;font-size:17px}.subtask-name{flex:1}.subtask-dates{color:var(--muted);white-space:nowrap}
+.footer{color:#98a2b3;font-size:11px;text-align:center;padding:17px}
+dialog{border:0;border-radius:14px;padding:0;width:min(620px,calc(100% - 28px));box-shadow:0 24px 80px #0b1f3a40}dialog::backdrop{background:#0c1d32a6}.modal-head{padding:18px 22px;background:#f8fafc;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:17px;color:var(--navy)}.modal-body{padding:20px 22px;max-height:70vh;overflow:auto}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.form-group{display:flex;flex-direction:column;gap:6px}.form-group.full{grid-column:1/-1}.form-group label{font-size:12px;font-weight:650;color:#475467}.form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid #d5dce6;border-radius:8px;padding:10px;font:inherit;font-size:13px;background:#fff}.form-group textarea{min-height:76px;resize:vertical}.modal-foot{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+.subtask-box{border:1px solid var(--line);border-radius:9px;padding:12px;margin-top:15px}.subtask-box h4{font-size:13px;margin:0 0 10px}.subtask-entry{display:grid;grid-template-columns:1fr 125px 90px;gap:7px}.subtask-list{margin-top:10px;display:grid;gap:6px}.subtask-chip{display:flex;justify-content:space-between;gap:8px;background:#f7f9fc;padding:7px 9px;border-radius:7px;font-size:12px}\n.subtask-entry{grid-template-columns:1.5fr 1fr 100px 125px 130px 130px 130px;align-items:center}.subtask-entry .field{min-width:0;width:100%;font-size:12px;padding:8px}.subtask-detail{background:#f8fafc}.subtask-detail>td{padding:10px 14px 14px 28px}.subtask-table{width:100%;min-width:850px;border:1px solid #e6ebf1;border-radius:8px;overflow:hidden}.subtask-table th{background:#eef3f8;font-size:10px;padding:9px}.subtask-table td{font-size:12px;padding:9px;border-bottom:1px solid #edf0f4}.subtask-table tr:last-child td{border-bottom:0}.toggle-sub{border:0;background:#edf4fb;color:#1769aa;border-radius:6px;padding:5px 8px;font-size:11px;font-weight:700;cursor:pointer;margin-top:7px}.subtask-title{font-weight:650}.subtask-status{font-size:10px;font-weight:700}.subtask-progress{display:flex;align-items:center;gap:6px;min-width:85px}.subtask-progress .progress{min-width:48px;flex:1;height:6px}.subtask-title-btn{border:0;background:none;padding:0;color:#1769aa;font:inherit;font-weight:650;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:#b8d5ef;text-underline-offset:3px}.subtask-title-btn:hover{color:#0d477a}.history-box{margin-top:18px;border:1px solid var(--line);border-radius:9px;padding:13px}.history-box h4{margin:0 0 10px;font-size:13px}.history-item{border-left:3px solid #c8dced;padding:5px 0 7px 11px;margin:8px 0;font-size:12px}.history-meta{color:#667085;font-size:10px;margin-bottom:3px}.history-empty{color:#98a2b3;font-size:12px;padding:8px 0}.last-comment{font-size:11px;color:#667085;max-width:290px;line-height:1.4;white-space:normal}.last-comment strong{color:#475467;font-weight:650}.user-list{display:grid;gap:8px;margin-top:15px}.user-item{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f7f9fc;border:1px solid #edf0f4;border-radius:8px;padding:10px 12px;font-size:12px}.user-item small{display:block;color:#667085;margin-top:3px}.user-empty{color:#98a2b3;font-size:12px;padding:10px 0}
+.summary-lines{display:grid;gap:4px;min-width:180px;max-width:360px;font-size:11px;line-height:1.4;color:#475467}
+.summary-lines div{padding-left:9px;border-left:2px solid #d5e3f1;white-space:pre-wrap}
+.status-actions{display:flex;gap:5px}
+.status-presets{display:flex;flex-wrap:wrap;gap:7px}
+.status-preset{display:flex;align-items:center;gap:6px;border:1px solid #dce3eb;background:#fff;border-radius:7px;padding:6px 8px;font-size:11px;cursor:pointer;color:#475467}
+.status-preset span{border-radius:20px;padding:4px 7px;font-size:9px;font-weight:800}
+.status-preset:hover{border-color:#8eb9df;background:#f8fbff}.status-color-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#98a2b3;margin-right:6px}
+.status-custom{background:#eef2ff;color:#454f91}
+@media(max-width:1100px){.subtask-entry{grid-template-columns:repeat(2,minmax(0,1fr))}.subtask-entry button{grid-column:1/-1}}
+@media(max-width:760px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.metric{padding:9px 10px}}
+@media(max-width:420px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.metric .num{font-size:20px}.metric-top{font-size:10px}}\n@media(max-width:850px){.cards{grid-template-columns:repeat(2,1fr)}main{padding:0 12px}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}}
+@media(max-width:480px){header{padding:17px}.cards{grid-template-columns:1fr 1fr}.metric{padding:13px}.metric .num{font-size:23px}.brand h1{font-size:18px}.actions{width:100%}.actions .btn{flex:1}}
+
+.gantt-week-axis{display:grid;grid-template-columns:minmax(190px,250px) minmax(450px,1fr);gap:14px;align-items:end;margin-bottom:8px}
+.gantt-week-labels{display:grid;grid-template-columns:repeat(var(--week-count),minmax(105px,1fr));}
+.gantt-week-head{display:flex;flex-direction:column;gap:3px;padding:7px 5px;border-left:1px solid #d8e0ea;background:#f1f5f9;text-align:center;white-space:nowrap}
+.gantt-week-head strong{font-size:10px;color:#344054}
+.gantt-week-head span{font-size:9px;color:#667085}
+.gantt-week-row .gantt-track{background-color:#f7f9fc;border-radius:5px}
+.kanban-board{display:grid;grid-template-columns:repeat(5,minmax(230px,1fr));gap:12px;padding:14px;overflow-x:auto;align-items:start}
+.kanban-column{background:#f5f7fa;border:1px solid #e5eaf0;border-radius:10px;min-height:260px;overflow:hidden}
+.kanban-column-head{display:flex;align-items:center;justify-content:space-between;padding:12px;border-bottom:1px solid #e5eaf0;background:#fff;font-size:12px;font-weight:750;color:#344054}
+.kanban-count{display:inline-grid;place-items:center;min-width:23px;height:23px;padding:0 6px;border-radius:20px;background:#eef2f6;color:#475467;font-size:11px}
+.kanban-dropzone{padding:9px;min-height:210px;display:grid;align-content:start;gap:9px}
+.kanban-dropzone.drag-over{background:#eaf3fb;outline:2px dashed #6aa6d8;outline-offset:-4px}
+.kanban-card{background:#fff;border:1px solid #e1e7ef;border-radius:9px;padding:11px;box-shadow:0 2px 5px #102b5508;cursor:grab}
+.kanban-card:active{cursor:grabbing}.kanban-card.dragging{opacity:.45}
+.kanban-card-title{font-size:12px;font-weight:750;color:#17375e;line-height:1.4}
+.kanban-card-project{font-size:10px;color:#1769aa;margin-top:5px;font-weight:650}
+.kanban-card-meta{display:flex;justify-content:space-between;gap:8px;margin-top:9px;color:#667085;font-size:10px}
+.kanban-card-progress{height:5px;background:#edf0f4;border-radius:8px;overflow:hidden;margin-top:9px}
+.kanban-card-progress span{display:block;height:100%;background:#1686c9}
+.kanban-card-actions{display:flex;justify-content:flex-end;margin-top:8px}
+.kanban-card-actions button{border:1px solid #e4e9f0;background:#fff;border-radius:6px;padding:5px 7px;color:#475467;font-size:10px;cursor:pointer}
+.kanban-empty{padding:22px 10px;text-align:center;color:#98a2b3;font-size:11px}
+
+ 
+.login-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#eef3f9,#f8fafc)}
+.login-card{width:min(100%,390px);background:#fff;border:1px solid #dfe7f0;border-radius:16px;padding:28px;box-shadow:0 18px 55px #18375a1c;display:grid;gap:14px}
+.login-brand{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+.login-brand h1{font-size:18px;margin:0;color:#12345b;letter-spacing:.3px}
+.login-brand p{margin:3px 0 0;color:#667085;font-size:12px}
+.login-card h2{font-size:18px;margin:4px 0 2px;color:#172b4d}
+.login-card .form-group{display:grid;gap:6px}
+.login-card input{width:100%;box-sizing:border-box;border:1px solid #d0d9e5;border-radius:8px;padding:11px 12px;font:inherit;font-size:13px}
+.login-submit{width:100%;justify-content:center;padding:11px}
+.login-note{font-size:11px;color:#667085;text-align:center;margin:2px 0 0}
+.login-error{margin:0;color:#c0392b;font-size:12px}
+.current-user-label{font-size:11px;color:#475467;align-self:center;white-space:nowrap}
+.user-credentials{font-size:11px;color:#667085;margin:10px 0 0}
+[hidden]{display:none!important}
+@media(max-width:650px){.login-card{padding:22px}.current-user-label{display:none}}
+/* ClickUp-inspired workspace layout */
+:root{
+ --navy:#24223b;--blue:#7b68ee;--cyan:#f1efff;--green:#16a765;--yellow:#e6a23c;
+ --red:#e35b67;--ink:#27263a;--muted:#77758a;--line:#e8e7ef;--bg:#f7f7fb;
+ --white:#fff;--shadow:0 2px 8px rgba(34,31,65,.05);
+}
+body{background:#f7f7fb;color:#27263a;font-size:13px}
+#appShell:not([hidden]){display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100vh}
+#appShell>header{
+ position:sticky;top:0;height:100vh;min-height:100vh;width:252px;z-index:20;
+ background:#24223b;color:#f7f6ff;padding:22px 14px 16px;display:flex;flex-direction:column;
+ align-items:stretch;justify-content:flex-start;gap:22px;flex-wrap:nowrap;overflow-y:auto;
+ border-right:1px solid #34314f
+}
+#appShell .brand{gap:11px;padding:0 8px}
+#appShell .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#8b79ff,#6d5ce7);color:#fff;font-size:19px}
+#appShell .brand h1{font-size:15px;color:#fff;letter-spacing:.6px}
+#appShell .brand p{font-size:10px;color:#aaa7c5}
+#appShell .brand:after{content:"JBS TERMINAIS  /  TECNOLOGIA";display:none}
+#appShell .page-tabs{
+ order:2;display:flex;flex-direction:column;gap:5px;margin:0;padding:0 0 14px;
+ border:0;border-bottom:1px solid #403d5c
+}
+#appShell .page-tabs:before{content:"WORKSPACE";display:block;padding:0 10px 8px;color:#8e8aa9;font-size:9px;font-weight:800;letter-spacing:1.1px}
+#appShell .page-tab{
+ display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-radius:7px;
+ padding:10px 11px;background:transparent;color:#c4c1d8;font-size:12px;font-weight:600
+}
+#appShell .page-tab:hover{background:#34314f;color:#fff}
+#appShell .page-tab.active{background:#403a69;color:#fff;box-shadow:inset 3px 0 #a99cff}
+#appShell .actions{
+ order:3;margin-top:auto;display:flex;flex-direction:column;align-items:stretch;gap:7px;
+ padding-top:12px;border-top:1px solid #403d5c
+}
+#appShell .actions .btn{width:100%;text-align:left;border-radius:7px;padding:9px 10px;font-size:11px}
+#appShell .actions .outline{color:#d4d1e5;border:1px solid #494665;background:#302e49}
+#appShell .actions .outline:hover{background:#403d5c}
+#appShell .actions .light{background:#7b68ee;color:#fff}
+#appShell .current-user-label{color:#bcb8d1;padding:4px 8px;white-space:normal}
+#appShell main{width:100%;max-width:none;min-width:0;margin:0;padding:25px 28px 36px;overflow:hidden}
+#appShell .toolbar{margin-bottom:17px;align-items:center}
+#appShell .toolbar h2{font-size:21px;font-weight:750;letter-spacing:-.35px;color:#292741}
+#appShell .toolbar p{font-size:11px;color:#858398}
+#appShell .btn{border-radius:7px}
+#appShell .btn.primary{background:#7b68ee;color:#fff}
+#appShell .cards{gap:10px;margin-bottom:18px}
+#appShell .metric{border:1px solid #ebe9f2;border-radius:10px;box-shadow:0 2px 7px #29274108;padding:11px 14px}
+#appShell .metric-icon{background:#f1efff;color:#7866e8}
+#appShell .metric .num{color:#292741}
+#appShell .panel{border:1px solid #e9e8f0;border-radius:11px;box-shadow:0 2px 8px #29274108;background:#fff}
+#appShell .filters{padding:12px 13px;background:#fff;border-bottom:1px solid #eeedf3}
+#appShell .field{border-color:#e2e0eb;border-radius:7px;background:#fff;font-size:12px}
+#appShell .field:focus,#appShell .form-group input:focus,#appShell .form-group select:focus,#appShell .form-group textarea:focus{outline:2px solid #ded9ff;border-color:#8b79ff}
+#appShell th{background:#fafafd;color:#77758b;font-size:10px;letter-spacing:.55px;padding:12px 11px}
+#appShell td{padding:12px 11px;font-size:12px}
+#appShell .project-row:hover{background:#faf9ff}
+#appShell .project-name{color:#34304f}
+#appShell .pill{font-size:10px}
+#appShell .icon-btn{border-color:#e8e6ef;border-radius:7px}
+#appShell .icon-btn:hover{background:#f4f2ff;color:#6d5ce7}
+#appShell .progress span{background:#7b68ee}
+#appShell .page-tab.active{border-color:transparent}
+#appShell .gantt-heading{background:#fff}
+#appShell .kanban-column{background:#f8f8fc;border-color:#eae8f1}
+#appShell .kanban-column-head{border-color:#eceaf2}
+#appShell .kanban-card{border-color:#e9e7f0;border-radius:9px;box-shadow:0 2px 5px #29274108}
+#appShell .kanban-card:hover{border-color:#bdb3ff}
+#appShell .toggle-sub{background:#f1efff;color:#6d5ce7}
+#appShell .subtasks{background:#faf9fd}
+#appShell .subtask-detail{background:#faf9fd}
+#appShell .footer{color:#aaa8b7}
+#appShell dialog{border-radius:13px}
+#appShell .modal-head{background:#faf9fd}
+#appShell .modal-head h3{color:#302d4c}
+#appShell .login-brand .logo{background:linear-gradient(135deg,#8b79ff,#6d5ce7)}
+@media(max-width:900px){
+ #appShell:not([hidden]){grid-template-columns:205px minmax(0,1fr)}
+ #appShell>header{width:205px;padding:18px 10px}
+ #appShell main{padding:20px 16px}
+}
+@media(max-width:680px){
+ #appShell:not([hidden]){display:block}
+ #appShell>header{position:relative;width:100%;height:auto;min-height:0;padding:12px;gap:12px}
+ #appShell .brand{padding:0 5px}
+ #appShell .page-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:0;border:0}
+ #appShell .page-tabs:before{display:none}
+ #appShell .page-tab{justify-content:center;text-align:center;padding:9px 5px;font-size:10px}
+ #appShell .actions{margin:0;padding-top:8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #appShell .actions .btn{font-size:10px;padding:8px}
+ #appShell main{padding:16px 10px 26px}
+}
+
+
+/* Gantt: escalas dia/semana/mês e progresso sobreposto */
+.gantt-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.gantt-tools label{font-size:11px;color:#77758a;font-weight:700}
+.gantt-tools .field{min-width:125px;padding:7px 10px}
+.gantt-legend .legend-progress{display:inline-block;width:12px;height:8px;border-radius:3px;background:#b9f2d8;margin-right:-7px}
+.gantt-axis,.gantt-row{display:grid;grid-template-columns:minmax(190px,250px) var(--timeline-width);gap:14px;min-width:calc(250px + var(--timeline-width) + 14px)}
+.gantt-axis{align-items:stretch;margin-bottom:8px}
+.gantt-axis-spacer{display:flex;align-items:center;font-size:10px;font-weight:750;color:#77758a;padding-left:4px}
+.gantt-week-labels{display:grid;grid-template-columns:repeat(var(--unit-count),210px)}
+.gantt-week-head{background:#f2f3f8;border-left:1px solid #dcdce8;text-align:center;padding:6px 3px 4px;min-width:0}
+.gantt-week-head>strong{font-size:10px;color:#48465f;display:block;margin-bottom:5px}
+.gantt-days-head{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px}
+.gantt-day-cell{font-size:9px;color:#858398;background:#fff;padding:4px 0 3px;display:flex;flex-direction:column;gap:3px}
+.gantt-day-cell b{font-size:10px;color:#393750}
+.gantt-day-cell.weekend,.gantt-day-head.weekend{background:#dcd5f7;color:#5141a5;border-left:1px solid #c8bdf0}
+.gantt-day-cell.weekend b,.gantt-day-head.weekend b{color:#43358f}
+.gantt-week-head .gantt-day-cell.weekend{background:#e4defb}
+.gantt-weekend-off{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.10) 0,rgba(255,255,255,.10) 4px,rgba(45,39,85,.30) 4px,rgba(45,39,85,.30) 7px);border-left:1px solid rgba(67,53,143,.35);border-right:1px solid rgba(67,53,143,.35);pointer-events:none;z-index:2}
+.gantt-weekend-note{font-size:10px;color:#77758a;margin-left:5px}
+.gantt-axis-simple .gantt-units{display:grid;min-width:0}
+.gantt-axis-simple .day-units{grid-template-columns:repeat(var(--unit-count),42px)}
+.gantt-axis-simple .month-units{grid-template-columns:repeat(var(--unit-count),125px)}
+.gantt-day-head{background:#f2f3f8;border-left:1px solid #dddde8;text-align:center;padding:7px 1px;display:flex;flex-direction:column;gap:3px}
+.gantt-day-head span,.gantt-day-head small{font-size:8px;color:#858398}
+.gantt-day-head b{font-size:11px;color:#393750}
+.gantt-month-head{background:#f2f3f8;border-left:1px solid #dddde8;text-align:center;padding:10px 4px;font-size:10px;font-weight:750;color:#48465f;text-transform:capitalize}
+.gantt-row{grid-template-columns:minmax(190px,250px) var(--timeline-width);padding:9px 0;min-width:calc(250px + var(--timeline-width) + 14px)}
+.gantt-label-cell{min-width:0}
+.gantt-track{width:var(--timeline-width);height:24px;background-color:#fafafe;border-radius:5px;position:relative;overflow:hidden}
+
+.gantt-bar{z-index:1}
+.gantt-bar{height:18px;top:3px;padding:0;border-radius:5px;overflow:hidden;display:flex;align-items:center;justify-content:center;isolation:isolate}
+.gantt-bar.status-andamento{background:#7b68ee}.gantt-bar.status-concluido{background:#16a765}.gantt-bar.status-atrasado{background:#e35b67}.gantt-bar.status-pendente{background:#e6a23c}.gantt-bar.status-cancelado{background:#98a2b3}
+.gantt-progress-fill{position:absolute;left:0;top:0;bottom:0;background:#b9f2d8;border-radius:5px 0 0 5px;z-index:0;opacity:.95}
+.gantt-bar-label{position:relative;z-index:1;color:#20243a!important;text-shadow:none;font-size:9px;font-weight:850;line-height:18px;padding:0 4px}
+.gantt-task-row .gantt-track{background-color:#f6f6fa}
+@media(max-width:700px){.gantt-heading{align-items:flex-start}.gantt-tools{width:100%}.gantt-legend{width:100%}}
+
+
+/* Correção fina de alinhamento: cada semana ocupa exatamente 210px,
+   portanto cada dia do cabeçalho ocupa exatamente 30px (igual ao Gantt). */
+.gantt-week-axis .gantt-week-labels{
+  display:grid !important;
+  grid-template-columns:repeat(var(--unit-count),210px) !important;
+  width:var(--timeline-width);
+  gap:0 !important;
+}
+.gantt-week-axis .gantt-week-head{
+  box-sizing:border-box;
+  width:210px;
+  min-width:210px;
+  max-width:210px;
+  padding-left:0 !important;
+  padding-right:0 !important;
+  border-left:0 !important;
+  overflow:hidden;
+}
+.gantt-week-axis .gantt-days-head{
+  display:grid;
+  grid-template-columns:repeat(7,30px) !important;
+  width:210px;
+  min-width:210px;
+  max-width:210px;
+  gap:0 !important;
+}
+.gantt-week-axis .gantt-day-cell{
+  box-sizing:border-box;
+  width:30px;
+  min-width:30px;
+  max-width:30px;
+  margin:0;
+  border-left:1px solid #e2e3ed;
+}
+.gantt-week-axis .gantt-day-cell:first-child{border-left:0}
+.gantt-week-axis .gantt-day-cell.weekend{
+  background:#dcd5f7;
+  box-shadow:inset 0 0 0 1px #c8bdf0;
+}
+/* A camada de sábado/domingo usa a mesma divisão: 30px por dia. */
+.gantt-track 
+
+
+/* Grade semanal única: cabeçalho e todas as linhas compartilham as mesmas medidas. */
+.gantt-axis.gantt-week-axis{
+  display:grid !important;
+  grid-template-columns:250px var(--timeline-width) !important;
+  column-gap:14px !important;
+  width:max-content;
+  min-width:calc(264px + var(--timeline-width)) !important;
+  box-sizing:border-box;
+}
+.gantt-week-axis .gantt-week-labels{
+  display:grid !important;
+  grid-template-columns:repeat(var(--unit-count),210px) !important;
+  width:var(--timeline-width) !important;
+  min-width:var(--timeline-width) !important;
+  gap:0 !important;
+}
+.gantt-week-axis .gantt-week-head{
+  display:block !important;
+  width:210px !important;
+  min-width:210px !important;
+  max-width:210px !important;
+  box-sizing:border-box;
+  padding:7px 0 !important;
+  border-left:0 !important;
+  overflow:hidden;
+}
+.gantt-week-axis .gantt-days-head{
+  display:grid !important;
+  grid-template-columns:repeat(7,30px) !important;
+  width:210px !important;
+  min-width:210px !important;
+  max-width:210px !important;
+  gap:0 !important;
+}
+.gantt-week-axis .gantt-day-cell{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:30px !important;
+  min-width:30px !important;
+  max-width:30px !important;
+  box-sizing:border-box;
+  margin:0 !important;
+  border-left:1px solid #e2e3ed;
+}
+.gantt-week-axis .gantt-day-cell:first-child{border-left:0}
+.gantt-week-axis .gantt-day-cell.weekend{
+  background:#dcd5f7 !important;
+  box-shadow:inset 0 0 0 1px #c8bdf0;
+}
+.gantt-row{
+  display:grid !important;
+  grid-template-columns:250px var(--timeline-width) !important;
+  column-gap:14px !important;
+  width:max-content;
+  min-width:calc(264px + var(--timeline-width)) !important;
+  box-sizing:border-box;
+}
+.gantt-row .gantt-track{
+  width:var(--timeline-width) !important;
+  min-width:var(--timeline-width) !important;
+  box-sizing:border-box;
+  background-color:#fafafe;
+}
+.gantt-row.gantt-row-week .gantt-track{
+  background-image:
+    repeating-linear-gradient(to right,transparent 0px 150px,#eeeafb 150px 210px),
+    repeating-linear-gradient(to right,#d9deea 0px 1px,transparent 1px 30px) !important;
+  background-size:210px 100%,30px 100% !important;
+  background-repeat:repeat-x !important;
+  background-position:left top !important;
+}
+.gantt-row.gantt-row-week .gantt-bar{z-index:2}
+.gantt-weekend-column{display:none !important}
+
+
+/* Faixas contínuas de fim de semana por trás de todas as linhas do Gantt. */
+#ganttChart{position:relative}
+.gantt-weekend-overlay{
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right,transparent 0px 150px,#eeeafb 150px 210px),
+    repeating-linear-gradient(to right,#d9deea 0px 1px,transparent 1px 30px);
+  background-size:210px 100%,30px 100%;
+  background-repeat:repeat-x;
+  background-position:left top;
+}
+.gantt-axis{position:relative;z-index:2}
+.gantt-row{position:relative;z-index:1;background:transparent !important}
+.gantt-row.gantt-row-week .gantt-track{
+  background:transparent !important;
+  background-image:none !important;
+}
+.gantt-row.gantt-row-week .gantt-bar{z-index:2}
+
+
+/* DAILY SUPORTE & INFRA TI */
+.daily-hero{background:linear-gradient(120deg,#24223b 0%,#5144a2 58%,#7b68ee 100%);color:#fff;border-radius:15px;padding:22px 24px;margin:4px 0 18px;box-shadow:0 10px 28px #39316b20;position:relative;overflow:hidden}
+.daily-hero:after{content:"DAILY";position:absolute;right:20px;bottom:-22px;font-size:88px;font-weight:900;letter-spacing:-5px;color:#ffffff10;pointer-events:none}
+.daily-kicker{font-size:10px;letter-spacing:1.8px;font-weight:800;color:#d9d3ff}.daily-hero h2{font-size:25px;margin:7px 0 5px;color:#fff;letter-spacing:-.5px}.daily-hero p{margin:0;color:#e4e0ff;font-size:12px;max-width:620px}
+.daily-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 15px}.daily-toolbar-left,.daily-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.daily-date{font-weight:750;color:#393750}.daily-date input{min-width:150px}.daily-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.daily-card{background:#fff;border:1px solid #e9e7f0;border-radius:12px;box-shadow:0 3px 12px #29274108;overflow:hidden;min-width:0}.daily-card-head{display:flex;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid #f0eff5}.daily-card-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px;flex:0 0 auto}.daily-card-head h3{font-size:13px;margin:0;color:#302d4c}.daily-card-head p{font-size:10px;color:#858398;margin:3px 0 0}.daily-card textarea{display:block;width:100%;min-height:145px;border:0;resize:vertical;padding:14px 15px;font:13px/1.65 Inter,Segoe UI,Arial,sans-serif;color:#34304f;outline:none;background:linear-gradient(#fff,#fff) padding-box}.daily-card textarea:focus{background:#fcfbff}.daily-card textarea::placeholder{color:#aaa8b7}.daily-card.done .daily-card-icon{background:#e8f7ef;color:#168653}.daily-card.priority .daily-card-icon{background:#fff4df;color:#b7791f}.daily-card.tickets .daily-card-icon{background:#fff0f0;color:#d04455}.daily-card.projects .daily-card-icon{background:#eeeaff;color:#6d5ce7}.daily-card.blockers .daily-card-icon{background:#eaf3fb;color:#2876ad}.daily-card.full{grid-column:1/-1}.daily-card.full textarea{min-height:95px}.daily-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 14px}.daily-meta .form-group{background:#fff;border:1px solid #e9e7f0;border-radius:10px;padding:10px 12px}.daily-meta label{font-size:10px;color:#77758a;font-weight:750;display:block;margin-bottom:6px}.daily-meta input{width:100%;border:0;outline:none;font:13px Inter,Segoe UI,Arial,sans-serif;color:#34304f;background:transparent}.daily-status{font-size:11px;color:#77758a;min-height:16px}.daily-tip{font-size:10px;color:#858398;margin:12px 2px 0}.daily-section-number{font-size:10px;font-weight:850;color:#aaa6c9;margin-left:auto}.daily-print-title{display:none}
+.daily-project-summaries{padding:12px 15px 4px;display:grid;gap:10px}
+.daily-project-summary{border-left:3px solid #7b68ee;padding:2px 0 3px 10px}
+.daily-project-summary h4{font-size:12px;margin:0 0 5px;color:#393750}
+.daily-summary-text{color:#55536d;font-size:11px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.daily-projects-empty{font-size:11px;color:#858398;padding:3px 0 7px}
+.daily-manual-label{padding:10px 15px 0;font-size:9px;font-weight:800;letter-spacing:.7px;color:#858398}
+body[data-theme="dark"] .daily-project-summary h4{color:#f4f1ff}
+body[data-theme="dark"] .daily-summary-text{color:#dedbed}
+body[data-theme="dark"] .daily-projects-empty,body[data-theme="dark"] .daily-manual-label{color:#bcb8d3}
+@media print{.daily-project-summaries{padding:8px 11px 2px}.daily-project-summary{break-inside:avoid}.daily-manual-label{padding:6px 11px 0}}
+@media(max-width:760px){.daily-grid{grid-template-columns:1fr}.daily-card.full{grid-column:auto}.daily-meta{grid-template-columns:1fr}.daily-hero h2{font-size:21px}}
+@media print{body{background:#fff!important}#appShell>header,.page-tabs,.daily-toolbar,.daily-tip,.footer{display:none!important}#appShell:not([hidden]){display:block!important}#appShell main{padding:0!important;margin:0!important}.daily-hero{background:#24223b!important;color:#fff!important;print-color-adjust:exact;-webkit-print-color-adjust:exact;margin:0 0 12px;padding:15px 18px}.daily-hero:after{display:none}.daily-hero h2{font-size:20px}.daily-meta{margin-bottom:9px}.daily-meta .form-group{padding:7px 10px}.daily-grid{gap:8px}.daily-card{break-inside:avoid;box-shadow:none}.daily-card textarea{min-height:105px!important;font-size:11px;padding:9px 11px;resize:none}.daily-card.full textarea{min-height:65px!important}.daily-card-head{padding:8px 10px}.daily-card-icon{width:27px;height:27px}.daily-print-title{display:block}}
+
+
+/* Seletor de aparência: claro/escuro */
+.theme-toggle{display:flex;align-items:center;justify-content:center;gap:8px;background:#302e49!important;color:#f4f2ff!important;border:1px solid #494665!important}
+.theme-toggle:hover{background:#403d5c!important}
+body[data-theme="dark"]{--ink:#e8e7f0;--muted:#aaa8bb;--line:#39374d;--bg:#171624;--white:#222132;background:#171624;color:#e8e7f0}
+body[data-theme="dark"] #appShell main{background:#171624;color:#e8e7f0}
+body[data-theme="dark"] .toolbar h2,body[data-theme="dark"] .gantt-heading h2{color:#f0eff8}
+body[data-theme="dark"] .toolbar p,body[data-theme="dark"] .metric-top,body[data-theme="dark"] .metric .hint{color:#aaa8bb}
+body[data-theme="dark"] .panel,body[data-theme="dark"] .metric,body[data-theme="dark"] .daily-card,body[data-theme="dark"] .daily-meta .form-group,body[data-theme="dark"] .gantt-heading,body[data-theme="dark"] .kanban-column-head{background:#222132;border-color:#39374d;color:#e8e7f0}
+body[data-theme="dark"] .metric .num,body[data-theme="dark"] .project-name,body[data-theme="dark"] .daily-card-head h3,body[data-theme="dark"] .daily-date{color:#f0eff8}
+body[data-theme="dark"] .filters,body[data-theme="dark"] th,body[data-theme="dark"] .kanban-column,body[data-theme="dark"] .subtasks,body[data-theme="dark"] .subtask-detail{background:#1d1b2b;color:#d8d6e5;border-color:#39374d}
+body[data-theme="dark"] td,body[data-theme="dark"] .daily-card-head{border-color:#39374d;color:#dedcea}
+body[data-theme="dark"] .field,body[data-theme="dark"] .form-group input,body[data-theme="dark"] .form-group select,body[data-theme="dark"] .form-group textarea,body[data-theme="dark"] .daily-meta input{background:#29273a;color:#f0eff8;border-color:#48455e}
+body[data-theme="dark"] .daily-card textarea{background:#222132;color:#f0eff8}
+body[data-theme="dark"] .daily-card textarea:focus{background:#29273a}
+body[data-theme="dark"] .daily-card textarea::placeholder{color:#89869f}
+body[data-theme="dark"] .daily-card-head p,body[data-theme="dark"] .daily-tip,body[data-theme="dark"] .daily-status{color:#aaa8bb}
+body[data-theme="dark"] .kanban-card,body[data-theme="dark"] .subtask-box,body[data-theme="dark"] .history-box,body[data-theme="dark"] .user-item{background:#29273a;border-color:#403d55;color:#e8e7f0}
+body[data-theme="dark"] .icon-btn,body[data-theme="dark"] .sort-direction,body[data-theme="dark"] .status-preset{background:#29273a;color:#e8e7f0;border-color:#48455e}
+body[data-theme="dark"] .gantt-track{background-color:#29273a}
+body[data-theme="dark"] .gantt-week-head,body[data-theme="dark"] .gantt-day-head,body[data-theme="dark"] .gantt-month-head{background:#29273a;color:#e8e7f0}
+body[data-theme="dark"] .gantt-day-head b,body[data-theme="dark"] .gantt-week-head strong{color:#e8e7f0}
+body[data-theme="dark"] .gantt-day-cell{background:#222132;color:#aaa8bb}
+body[data-theme="dark"] .gantt-day-cell b{color:#e8e7f0}
+body[data-theme="dark"] dialog{background:#222132;color:#e8e7f0}
+body[data-theme="dark"] .modal-head{background:#29273a;border-color:#39374d}
+body[data-theme="dark"] .modal-head h3,body[data-theme="dark"] .form-group label{color:#e8e7f0}
+body[data-theme="dark"] .modal-foot{border-color:#39374d}
+body[data-theme="dark"] .empty{color:#aaa8bb}
+@media print{body[data-theme="dark"]{--bg:#fff;background:#fff!important;color:#111!important}body[data-theme="dark"] .daily-card,body[data-theme="dark"] .daily-card textarea,body[data-theme="dark"] .daily-meta .form-group{background:#fff!important;color:#111!important}}
+
+
+/* REFINO DE CONTRASTE — TEMA ESCURO */
+body[data-theme="dark"] #appShell main,
+body[data-theme="dark"] #appShell #dashboardPage,
+body[data-theme="dark"] #appShell #kanbanPage{background:#171624!important;color:#eeeefa!important}
+body[data-theme="dark"] #appShell .toolbar h2,
+body[data-theme="dark"] #appShell .gantt-heading h2{color:#f5f3ff!important}
+body[data-theme="dark"] #appShell .toolbar p,
+body[data-theme="dark"] #appShell .footer{color:#aaa7c2!important}
+
+/* Painel, filtros e tabela principal */
+body[data-theme="dark"] #appShell .panel,
+body[data-theme="dark"] #appShell .panel .filters{background:#211f31!important;border-color:#403d56!important;color:#eeeefa!important}
+body[data-theme="dark"] #appShell .panel .filters{border-bottom-color:#403d56!important}
+body[data-theme="dark"] #appShell .panel table{background:#211f31!important;color:#e9e7f4!important}
+body[data-theme="dark"] #appShell .panel th,
+body[data-theme="dark"] #appShell .subtask-table th{background:#2b2940!important;color:#c9c5e3!important;border-bottom-color:#48445f!important}
+body[data-theme="dark"] #appShell .panel td,
+body[data-theme="dark"] #appShell .subtask-table td{background:#211f31!important;color:#e5e3f0!important;border-bottom-color:#39364d!important}
+body[data-theme="dark"] #appShell .panel .project-row:hover td,
+body[data-theme="dark"] #appShell .subtask-table tr:hover td{background:#2b2940!important}
+body[data-theme="dark"] #appShell .subtask-detail>td{background:#1b1929!important}
+body[data-theme="dark"] #appShell .project-name{color:#f3f0ff!important;font-weight:800}
+body[data-theme="dark"] #appShell .summary-lines{color:#dedbed!important}
+body[data-theme="dark"] #appShell .summary-lines div{border-left-color:#7164bd!important}
+body[data-theme="dark"] #appShell .sub-count,
+body[data-theme="dark"] #appShell .progress-label{color:#bcb8d3!important}
+body[data-theme="dark"] #appShell .owner{color:#e2def5!important}
+body[data-theme="dark"] #appShell .last-comment{color:#d0cde0!important}
+body[data-theme="dark"] #appShell .last-comment strong{color:#f1efff!important}
+body[data-theme="dark"] #appShell .priority.Alta,
+body[data-theme="dark"] #appShell .priority.Mandatória{color:#ff858c!important}
+body[data-theme="dark"] #appShell .priority.Média{color:#ffd078!important}
+body[data-theme="dark"] #appShell .priority.Baixa{color:#72d6a5!important}
+body[data-theme="dark"] #appShell .subtask-title-btn{color:#9fcaff!important;text-decoration-color:#547eaf!important}
+body[data-theme="dark"] #appShell .subtask-title-btn:hover{color:#d0e5ff!important}
+body[data-theme="dark"] #appShell .toggle-sub{background:#393354!important;color:#d8d0ff!important;border:1px solid #595078!important}
+body[data-theme="dark"] #appShell .toggle-sub:hover{background:#49416b!important}
+
+/* Campos e controles */
+body[data-theme="dark"] #appShell .field,
+body[data-theme="dark"] #appShell .filters select,
+body[data-theme="dark"] #appShell .filters input,
+body[data-theme="dark"] #appShell .form-group input,
+body[data-theme="dark"] #appShell .form-group select,
+body[data-theme="dark"] #appShell .form-group textarea{background:#302d45!important;color:#f4f2ff!important;border-color:#514d6b!important}
+body[data-theme="dark"] #appShell .field::placeholder,
+body[data-theme="dark"] #appShell .form-group input::placeholder,
+body[data-theme="dark"] #appShell .form-group textarea::placeholder{color:#aaa6c3!important;opacity:1}
+body[data-theme="dark"] #appShell .sort-controls label{color:#c7c3dc!important}
+body[data-theme="dark"] #appShell .icon-btn,
+body[data-theme="dark"] #appShell .sort-direction{background:#343149!important;color:#f0edff!important;border-color:#514d6b!important}
+body[data-theme="dark"] #appShell .icon-btn:hover{background:#494366!important;color:#fff!important}
+body[data-theme="dark"] #appShell input[type="checkbox"]{accent-color:#9b8cff}
+
+/* Indicadores, cartões e demais telas */
+body[data-theme="dark"] #appShell .metric{background:#242237!important;border-color:#45415d!important}
+body[data-theme="dark"] #appShell .metric-top,
+body[data-theme="dark"] #appShell .metric .hint{color:#c0bdd5!important}
+body[data-theme="dark"] #appShell .metric .num{color:#fff!important}
+body[data-theme="dark"] #appShell .kanban-column{background:#211f31!important;border-color:#403d56!important}
+body[data-theme="dark"] #appShell .kanban-column-head{background:#2b2940!important;color:#f0edff!important;border-color:#403d56!important}
+body[data-theme="dark"] #appShell .kanban-card{background:#302d45!important;border-color:#514d6b!important;color:#eeeefa!important}
+body[data-theme="dark"] #appShell .kanban-card-title{color:#f4f1ff!important}
+body[data-theme="dark"] #appShell .kanban-card-meta{color:#c2bed8!important}
+body[data-theme="dark"] #appShell .kanban-empty{color:#aaa6c3!important}
+body[data-theme="dark"] #appShell .daily-card{background:#242237!important;border-color:#45415d!important}
+body[data-theme="dark"] #appShell .daily-card-head{background:#2b2940!important}
+body[data-theme="dark"] #appShell .daily-card-head h3{color:#f4f1ff!important}
+body[data-theme="dark"] #appShell .daily-card textarea{background:#242237!important;color:#f4f2ff!important}
+body[data-theme="dark"] #appShell .daily-meta .form-group{background:#242237!important;border-color:#45415d!important}
+body[data-theme="dark"] #appShell .daily-meta label{color:#c4c0d9!important}
+body[data-theme="dark"] #appShell .daily-meta input{background:transparent!important;color:#f4f2ff!important}
+body[data-theme="dark"] #appShell .subtask-box,
+body[data-theme="dark"] #appShell .history-box,
+body[data-theme="dark"] #appShell .user-item{background:#302d45!important;border-color:#514d6b!important;color:#eeeefa!important}
+body[data-theme="dark"] #appShell .history-meta,
+body[data-theme="dark"] #appShell .history-empty,
+body[data-theme="dark"] #appShell .user-item small{color:#bcb8d3!important}
+body[data-theme="dark"] #appShell .modal-head{background:#2b2940!important}
+body[data-theme="dark"] #appShell dialog{background:#211f31!important;color:#eeeefa!important}
+body[data-theme="dark"] #appShell .modal-foot{background:#211f31!important;border-top-color:#403d56!important}
+body[data-theme="dark"] #appShell .empty{color:#c0bdd5!important}
+body[data-theme="dark"] #appShell .empty b{color:#fff!important}
+
+@media print{
+ body[data-theme="dark"] #appShell main,
+ body[data-theme="dark"] #appShell .panel,
+ body[data-theme="dark"] #appShell .panel td,
+ body[data-theme="dark"] #appShell .panel th{background:#fff!important;color:#111!important}
+}
+
+
+/* MELHORIA VISUAL — LISTA DE PROJETOS NO TEMA CLARO */
+body:not([data-theme="dark"]) #appShell .panel #projectRows .project-row td{
+  background:#f8f7ff;
+  border-top:1px solid #eeebfb;
+  border-bottom:1px solid #e7e3f5;
+  transition:background .15s ease;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .project-row:nth-of-type(even) td{
+  background:#f1f4fb;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .project-row:hover td{
+  background:#eae7ff;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .project-row td:first-child{
+  border-left:4px solid #8875e8;
+  padding-left:13px;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .project-name{
+  color:#292442;
+  font-size:15px;
+  line-height:1.4;
+  font-weight:800;
+  letter-spacing:-.15px;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .sub-count{
+  color:#696581;
+  font-size:11px;
+  font-weight:600;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .summary-lines{
+  color:#45435f;
+  font-size:12px;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .owner{
+  color:#34314f;
+  font-weight:700;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .progress{
+  background:#e2e0ed;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .toggle-sub{
+  background:#e8e4ff;
+  border:1px solid #d5cef9;
+  color:#5949b2;
+}
+body:not([data-theme="dark"]) #appShell .panel #projectRows .toggle-sub:hover{
+  background:#dcd5ff;
+}
+
+
+/* CORES DOS INDICADORES — DESTAQUE POR SITUAÇÃO */
+#appShell .metric{
+  position:relative;
+  overflow:hidden;
+  border-width:1px 1px 1px 4px;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+#appShell .metric:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(20,18,50,.13)}
+#appShell .metric-total{border-left-color:#8b79ff!important;background:linear-gradient(120deg,#302b50,#242237)!important}
+#appShell .metric-running{border-left-color:#3b9bea!important;background:linear-gradient(120deg,#203b56,#242237)!important}
+#appShell .metric-pending{border-left-color:#e6a23c!important;background:linear-gradient(120deg,#51402a,#242237)!important}
+#appShell .metric-done{border-left-color:#24b879!important;background:linear-gradient(120deg,#204b3d,#242237)!important}
+#appShell .metric-overdue{border-left-color:#e35b67!important;background:linear-gradient(120deg,#512d3a,#242237)!important}
+#appShell .metric-total .metric-icon{background:#51458a!important;color:#e2dcff!important}
+#appShell .metric-running .metric-icon{background:#285b83!important;color:#d9efff!important}
+#appShell .metric-pending .metric-icon{background:#765326!important;color:#ffedc7!important}
+#appShell .metric-done .metric-icon{background:#236448!important;color:#d8ffeb!important}
+#appShell .metric-overdue .metric-icon{background:#783b49!important;color:#ffe0e3!important}
+#appShell .metric-total .num{color:#c9bdff!important}
+#appShell .metric-running .num{color:#8dccff!important}
+#appShell .metric-pending .num{color:#ffd083!important}
+#appShell .metric-done .num{color:#7ee0b0!important}
+#appShell .metric-overdue .num{color:#ff9ba3!important}
+#appShell .metric .metric-top{color:#e4e1f3!important}
+#appShell .metric .hint{color:#c0bdd5!important}
+
+/* No tema claro, manter as mesmas cores com fundos suaves e legíveis. */
+body:not([data-theme="dark"]) #appShell .metric-total{background:linear-gradient(120deg,#f0edff,#fff)!important;border-color:#d9d1ff!important;border-left-color:#8068ed!important}
+body:not([data-theme="dark"]) #appShell .metric-running{background:linear-gradient(120deg,#eaf5ff,#fff)!important;border-color:#c9e4fa!important;border-left-color:#278bd0!important}
+body:not([data-theme="dark"]) #appShell .metric-pending{background:linear-gradient(120deg,#fff5e4,#fff)!important;border-color:#f2dfbd!important;border-left-color:#d99527!important}
+body:not([data-theme="dark"]) #appShell .metric-done{background:linear-gradient(120deg,#e9f8f0,#fff)!important;border-color:#c8ead8!important;border-left-color:#1b9a62!important}
+body:not([data-theme="dark"]) #appShell .metric-overdue{background:linear-gradient(120deg,#fff0f1,#fff)!important;border-color:#f1d0d3!important;border-left-color:#d94e5c!important}
+body:not([data-theme="dark"]) #appShell .metric-total .metric-icon{background:#ded7ff!important;color:#624bd0!important}
+body:not([data-theme="dark"]) #appShell .metric-running .metric-icon{background:#d7edff!important;color:#176da8!important}
+body:not([data-theme="dark"]) #appShell .metric-pending .metric-icon{background:#ffebc8!important;color:#98600c!important}
+body:not([data-theme="dark"]) #appShell .metric-done .metric-icon{background:#d5f2e2!important;color:#137548!important}
+body:not([data-theme="dark"]) #appShell .metric-overdue .metric-icon{background:#ffdcdf!important;color:#b52e3c!important}
+body:not([data-theme="dark"]) #appShell .metric-total .num{color:#5944b8!important}
+body:not([data-theme="dark"]) #appShell .metric-running .num{color:#176da8!important}
+body:not([data-theme="dark"]) #appShell .metric-pending .num{color:#98600c!important}
+body:not([data-theme="dark"]) #appShell .metric-done .num{color:#137548!important}
+body:not([data-theme="dark"]) #appShell .metric-overdue .num{color:#b52e3c!important}
+body:not([data-theme="dark"]) #appShell .metric .metric-top{color:#514e69!important}
+body:not([data-theme="dark"]) #appShell .metric .hint{color:#77738c!important}
+
+/* Tarefas ordenadas pela data de início crescente; sem data ficam ao final. */
+</style>
+</head>
+<body>
+<div id="loginScreen" class="login-screen">
+ <form class="login-card" onsubmit="login(event)">
+  <div class="login-brand"><div class="logo">▦</div><div><h1>GESTÃO DE PROJETOS E DEMANDAS TI</h1><p>Acesso ao painel de gestão</p></div></div>
+  <h2>Entrar no sistema</h2>
+  <div class="form-group"><label for="loginUsername">Usuário</label><input id="loginUsername" autocomplete="username" required placeholder="Informe seu usuário"></div>
+  <div class="form-group"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Informe sua senha"></div>
+  <p id="loginError" class="login-error" hidden>Usuário ou senha inválidos.</p>
+  <button class="btn primary login-submit" type="submit">Entrar</button>
+  <p class="login-note">Primeiro acesso: usuário <b>Admin</b> · senha <b>jbst@2026</b></p>
+ </form>
+</div>
+<div id="appShell" hidden>
+<header>
+ <div class="brand"><div class="logo">▦</div><div><h1>GESTÃO DE PROJETOS E DEMANDAS TI</h1><p>Painel de projetos e demandas controladas</p></div></div>
+ <div class="actions">
+  <button class="btn outline" data-admin-only onclick="openUsers()">＋ Usuários</button>
+   <button class="btn outline" data-admin-only onclick="openStatuses()">⚙ Status</button>
+  <button class="btn outline" data-admin-only onclick="exportExcel()">Exportar Excel</button>
+  <button class="btn outline" data-admin-only onclick="document.getElementById('importFile').click()">Importar Excel</button>
+  <span id="currentUserLabel" class="current-user-label"></span>
+  <button class="btn outline theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Alternar tema">☾ <span>Fundo escuro</span></button>
+  <button class="btn outline" onclick="logout()">Sair</button>
+  <button class="btn light" data-write-only onclick="openProject()">＋ Nova iniciativa</button>
+  <input id="importFile" type="file" accept=".xlsx,.xls,.json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,application/json" hidden onchange="importData(event)">
+ </div>
+</header>
+<main>
+ <div class="page-tabs">
+  <button type="button" id="tabDashboard" class="page-tab active" onclick="switchPage('dashboard')">▦ Visão geral</button>
+  <button type="button" id="tabKanban" class="page-tab" onclick="switchPage('kanban')">▥ Kanban de tarefas</button>
+  <button type="button" id="tabDaily" class="page-tab" onclick="switchPage('daily')">✦ Daily Suporte & Infra TI</button>
+ </div>
+ <div id="dashboardPage">
+ <div class="toolbar"><div><h2>Visão geral</h2><p id="todayLabel">Acompanhamento de projetos e demandas controladas</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-write-only onclick="openProject()">＋ Cadastrar iniciativa</button></div></div>
+ <section class="cards">
+  <div class="metric metric-total"><div class="metric-top">Total de iniciativas <span class="metric-icon">▦</span></div><div class="num" id="total">0</div><div class="hint">Projetos e demandas controladas cadastrados</div></div>
+  <div class="metric metric-running"><div class="metric-top">Em andamento <span class="metric-icon">◷</span></div><div class="num" id="running">0</div><div class="hint">Demandas em execução</div></div>
+  <div class="metric metric-pending"><div class="metric-top">Pendentes <span class="metric-icon">◌</span></div><div class="num" id="pending">0</div><div class="hint">Aguardando início ou ação</div></div>
+  <div class="metric metric-done"><div class="metric-top">Concluídos <span class="metric-icon">✓</span></div><div class="num" id="done">0</div><div class="hint">Iniciativas finalizadas</div></div>
+  <div class="metric metric-overdue"><div class="metric-top">Atrasados <span class="metric-icon">!</span></div><div class="num" id="overdue">0</div><div class="hint">Fora do prazo previsto</div></div>
+ </section>
+
+ <section class="panel">
+  <div class="filters">
+   <input class="field search" id="search" placeholder="Buscar iniciativa, responsável ou comentário..." oninput="render()">
+   <select class="field" id="typeFilter" onchange="render()"><option value="">Todos os tipos</option><option value="PROJETO">Projetos</option><option value="DEMANDA CONTROLADA">Demandas controladas</option></select>
+   <select class="field" id="statusFilter" onchange="render()"><option value="TODOS">Todos os status</option><option value="ATIVOS" selected>Ativos (exceto concluídos e cancelados)</option><option value="">Todos os status</option><option value="AGUARDANDO">AGUARDANDO</option><option value="AGUARDANDO">AGUARDANDO</option><option value="EM ANDAMENTO">EM ANDAMENTO</option><option value="CONCLUÍDO">CONCLUÍDO</option><option value="ATRASADO">ATRASADO</option><option value="CANCELADO">CANCELADO</option></select>
+   <select class="field" id="priorityFilter" onchange="render()"><option value="">Todas as prioridades</option><option>Mandatória</option><option>Alta</option><option>Média</option><option>Baixa</option></select>
+   <div class="sort-controls"><label for="projectSort">Ordenar por</label><select class="field" id="projectSort" onchange="render()"><option value="">Ordem original</option><option value="name">Projeto / demanda</option><option value="summary">Resumo do projeto</option><option value="owner">Responsável</option><option value="priority" selected>Prioridade</option><option value="progress">Progresso</option><option value="status">Status</option><option value="start">Início</option><option value="end">Previsão fim</option></select><button type="button" class="sort-direction" id="sortDirectionButton" onclick="toggleSortDirection()" title="Alternar ordem">↑ Crescente</button></div>
+   <button class="btn small" style="background:#edf2f7;color:#344054" onclick="clearFilters()">Limpar filtros</button>
+  </div>
+  <div class="table-wrap"><table>
+   <thead><tr><th>Tipo</th><th class="sortable" data-sort="name" onclick="sortByColumn('name')">Iniciativa</th><th class="sortable" data-sort="summary" onclick="sortByColumn('summary')">Resumo do projeto</th><th class="sortable" data-sort="owner" onclick="sortByColumn('owner')">Responsável</th><th class="sortable" data-sort="priority" onclick="sortByColumn('priority')">Prioridade</th><th class="sortable" data-sort="progress" onclick="sortByColumn('progress')">Progresso</th><th class="sortable" data-sort="status" onclick="sortByColumn('status')">Status</th><th class="sortable" data-sort="start" onclick="sortByColumn('start')">Início</th><th class="sortable" data-sort="end" onclick="sortByColumn('end')">Previsão fim</th><th>Ações</th></tr></thead>
+   <tbody id="projectRows"></tbody>
+  </table></div>
+ </section>
+ <div class="footer">Versão inicial para testes • Os dados ficam salvos neste navegador. Faça exportações periódicas para backup.</div>
+ </div>
+ <div id="kanbanPage" hidden>
+  <div class="toolbar"><div><h2>Kanban de tarefas</h2><p>Arraste as tarefas entre as colunas para atualizar o status automaticamente.</p></div><button class="btn primary" onclick="switchPage('dashboard')">Voltar à visão geral</button></div>
+  <section class="panel kanban-panel">
+   <div class="filters">
+    <input class="field search" id="kanbanSearch" placeholder="Buscar tarefa, projeto ou responsável..." oninput="renderKanban()">
+    <select class="field" id="kanbanProjectFilter" onchange="renderKanban()"><option value="">Todos os projetos</option></select>
+   </div>
+   <div id="kanbanBoard" class="kanban-board"></div>
+  </section>
+ </div>
+<div id="dailyPage" hidden>
+   <div class="daily-hero"><h2>DAILY SUPORTE & INFRA TI</h2><p>Alinhamento rápido do time: o que avançou, o que vem pela frente e o que precisa de ajuda para não virar impedimento.</p></div>
+   <div class="daily-toolbar"><div class="daily-toolbar-left"><span class="daily-date">Reunião de</span><input class="field" type="date" id="dailyDate" onchange="loadDaily()"><span class="daily-status" id="dailySaveStatus">Anotações salvas neste navegador</span></div><div class="daily-actions"><button class="btn" style="background:#f1efff;color:#5d4cc4" onclick="newDaily()">◷ Pauta de hoje</button><button class="btn" style="background:#eaf3fb;color:#1769aa" onclick="copyPreviousDaily()">⧉ Copiar dia anterior</button><button class="btn" style="background:#edf2f7;color:#344054" onclick="printDaily()">▤ Imprimir pauta</button><button class="btn primary" onclick="saveDaily(true)">✓ Salvar anotações</button></div></div>
+   <div class="daily-meta"><div class="form-group"><label>QUEM ESTÁ CONDUZINDO</label><input id="dailyLead" placeholder="Nome do responsável pela reunião" oninput="saveDaily(false)"></div><div class="form-group"><label>PARTICIPANTES / AUSÊNCIAS</label><input id="dailyPeople" placeholder="Quem está participando? Registre ausências, se houver" oninput="saveDaily(false)"></div></div>
+   <div class="daily-grid">
+    <section class="daily-card done"><div class="daily-card-head"><span class="daily-card-icon">✓</span><div><h3>Atividades realizadas</h3><p>O que foi concluído ou avançou desde a última DAILY?</p></div><span class="daily-section-number">01</span></div><textarea id="dailyDone" placeholder="• Atividade concluída / entrega realizada
+• Chamado resolvido / suporte prestado
+• Atualização importante para o time" oninput="saveDaily(false)"></textarea></section>
+    <section class="daily-card priority"><div class="daily-card-head"><span class="daily-card-icon">⚡</span><div><h3>Prioridades do dia</h3><p>O que precisa de atenção primeiro hoje?</p></div><span class="daily-section-number">02</span></div><textarea id="dailyPriorities" placeholder="• Prioridade 1 — responsável — prazo
+• Prioridade 2 — responsável — prazo
+• Entrega ou atividade crítica" oninput="saveDaily(false)"></textarea></section>
+    <section class="daily-card tickets"><div class="daily-card-head"><span class="daily-card-icon">◷</span><div><h3>Chamados pendentes</h3><p>Fila, criticidade, dependências e próximos retornos.</p></div><span class="daily-section-number">03</span></div><textarea id="dailyTickets" placeholder="• Nº do chamado — assunto — responsável — situação
+• Chamado aguardando fornecedor / usuário / outra área
+• Próxima ação e previsão de retorno" oninput="saveDaily(false)"></textarea></section>
+    <section class="daily-card projects"><div class="daily-card-head"><span class="daily-card-icon">▦</span><div><h3>Projetos em andamento</h3><p>Resumos das iniciativas selecionadas + anotações da reunião.</p></div><span class="daily-section-number">04</span></div><div id="dailyProjectSummaries" class="daily-project-summaries"><div class="daily-projects-empty">Nenhuma iniciativa foi selecionada para exibição na DAILY.</div></div><div class="daily-manual-label">ATUALIZAÇÕES DA REUNIÃO</div><textarea id="dailyProjects" placeholder="• Avanço desde a última reunião
+• Próxima etapa — responsável — previsão
+• Ponto que exige acompanhamento" oninput="saveDaily(false)"></textarea></section>
+    <section class="daily-card blockers full"><div class="daily-card-head"><span class="daily-card-icon">⚑</span><div><h3>Impedimentos e necessidades de apoio</h3><p>O que está bloqueando o time? Quem pode ajudar e qual decisão é necessária?</p></div><span class="daily-section-number">05</span></div><textarea id="dailyBlockers" placeholder="• Impedimento / impacto na operação
+• Apoio ou decisão necessária — responsável
+• Dependência externa e ação para desbloqueio" oninput="saveDaily(false)"></textarea></section>
+    <section class="daily-card full"><div class="daily-card-head"><span class="daily-card-icon" style="background:#f2f1f7;color:#625f7d">☷</span><div><h3>Decisões e encaminhamentos</h3><p>Registre os combinados para que todos saiam com clareza sobre os próximos passos.</p></div><span class="daily-section-number">EXTRA</span></div><textarea id="dailyDecisions" placeholder="• Decisão / combinado — responsável — prazo
+• Assunto que será retomado na próxima DAILY" oninput="saveDaily(false)"></textarea></section>
+   </div>
+   <p class="daily-tip">Dica: mantenha a reunião objetiva (15 minutos). Registre apenas os pontos essenciais, responsáveis e próximos passos. As pautas ficam salvas localmente neste navegador.</p>
+  </div>
+</main>
+<dialog id="projectDialog">
+ <form id="projectForm" onsubmit="saveProject(event)">
+  <div class="modal-head"><h3 id="projectDialogTitle">Novo projeto</h3><button type="button" class="icon-btn" onclick="closeProject()">✕</button></div>
+  <div class="modal-body">
+   <input type="hidden" id="projectId">
+   <div class="form-grid">
+    <div class="form-group"><label>Tipo de iniciativa *</label><select id="initiativeType" required><option value="PROJETO">PROJETO</option><option value="DEMANDA CONTROLADA">DEMANDA CONTROLADA</option></select></div>
+    <div class="form-group"><label>Nome da iniciativa *</label><input id="name" required placeholder="Ex.: Implantação de CFTV - Área B"></div>
+    <div class="form-group full"><label>Resumo / principais tópicos (uma informação por linha)</label><textarea id="summary" rows="4"></textarea><small style="color:#667085">Cada linha será exibida separadamente na coluna “Resumo”.</small></div>
+     <div class="form-group full"><label style="display:flex;align-items:center;gap:8px;font-weight:500"><input id="showInDaily" type="checkbox"> Exibir na DAILY Suporte &amp; Infra</label><small style="color:#667085">Quando selecionado, o resumo desta iniciativa será apresentado automaticamente em “Projetos em andamento” na DAILY, enquanto o status não for CONCLUÍDO ou CANCELADO.</small></div>
+     <div class="form-group"><label>Responsável</label><select id="owner"><option value="">Selecione um responsável</option></select></div>
+    <div class="form-group"><label>Prioridade</label><select id="priority"><option>Mandatória</option><option>Alta</option><option selected>Média</option><option>Baixa</option></select></div>
+    <div class="form-group"><label>Data de início</label><input id="start" type="date"></div>
+    <div class="form-group"><label>Previsão de conclusão</label><input id="end" type="date"></div>
+    <div class="form-group"><label>Status</label><select id="status" onchange="projectStatusChanged()"><option>AGUARDANDO</option><option>AGUARDANDO</option><option>EM ANDAMENTO</option><option>CONCLUÍDO</option><option>ATRASADO</option><option>CANCELADO</option></select></div>
+    <div class="form-group"><label>Progresso (%)</label><input id="progress" type="number" min="0" max="100" value="0"></div>
+    <div class="form-group"><label>Data de conclusão</label><input id="projectCompleted" type="date" onchange="projectCompletionDateChanged()"></div>
+    <div class="form-group full"><label style="display:flex;align-items:center;gap:8px;font-weight:500"><input id="workWeekends" type="checkbox"> Projeto terá atividades aos sábados e domingos</label><small style="color:#667085">Desmarcado: sábados e domingos ficam destacados como dias sem atividade prevista dentro da barra. Marcado: sábados e domingos são considerados dias normais de execução, sem a marcação de bloqueio.</small></div>
+    <div class="form-group full"><label style="display:flex;align-items:center;gap:8px;font-weight:500"><input id="autoProgress" type="checkbox" onchange="setAutoProgressUI()"> Calcular automaticamente o progresso do projeto pela média das tarefas</label><small style="color:#667085">Quando marcado, o progresso principal será atualizado com a média dos percentuais das tarefas. Desmarcado, o progresso poderá ser informado manualmente.</small></div>
+    <div class="form-group full"><label>Comentário principal / observações</label><textarea id="comment" placeholder="Registre atualizações, dependências e próximos passos..."></textarea></div>
+   </div>
+  </div>
+  <div class="modal-foot"><button type="button" class="btn" style="background:#edf2f7" onclick="closeProject()">Cancelar</button><button class="btn primary" type="submit">Salvar projeto</button></div>
+ </form>
+</dialog>
+<dialog id="subtaskDialog">
+ <form id="subtaskForm" onsubmit="saveSubtaskEdit(event)">
+  <div class="modal-head"><h3>Editar tarefa</h3><button type="button" class="icon-btn" onclick="closeSubtask()">✕</button></div>
+  <div class="modal-body">
+   <input type="hidden" id="editProjectId"><input type="hidden" id="editSubtaskId">
+   <div class="form-grid">
+    <div class="form-group full"><label>Nome da tarefa *</label><input id="editSubName" required></div>
+    <div class="form-group"><label>Responsável</label><select id="editSubOwner"><option value="">Selecione um responsável</option></select></div>
+    <div class="form-group"><label>Progresso (%)</label><input id="editSubProgress" type="number" min="0" max="100" value="0"></div>
+    <div class="form-group"><label>Status</label><select id="editSubStatus" onchange="taskStatusChanged()"><option>AGUARDANDO</option><option>EM ANDAMENTO</option><option>CONCLUÍDO</option><option>ATRASADO</option><option>CANCELADO</option></select></div>
+    <div class="form-group"><label>Data de início</label><input id="editSubStart" type="date"></div>
+    <div class="form-group"><label>Previsão fim</label><input id="editSubEnd" type="date"></div>
+    <div class="form-group"><label>Data conclusão</label><input id="editSubCompleted" type="date" onchange="taskCompletionDateChanged()"></div>
+   </div>
+   <div class="history-box">
+    <h4>Registrar atualização no histórico</h4>
+    <div class="form-grid">
+     <div class="form-group full"><label>Comentário / atualização</label><textarea id="historyNote" placeholder="Descreva o andamento, impedimentos, decisões ou próximos passos..."></textarea></div>
+    </div>
+    <div style="font-size:11px;color:#667085;margin-top:6px">O comentário será incluído no histórico ao salvar a tarefa.</div>
+   </div>
+   <div class="history-box"><h4>Histórico de atualizações</h4><div id="historyList"></div></div>
+  </div>
+  <div class="modal-foot"><button type="button" class="btn" style="background:#edf2f7" onclick="closeSubtask()">Cancelar</button><button class="btn primary" type="submit">Salvar alterações</button></div>
+ </form>
+</dialog>
+<dialog id="usersDialog">
+ <form id="userForm" onsubmit="saveUser(event)">
+  <div class="modal-head"><h3>Cadastro de usuários</h3><button type="button" class="icon-btn" onclick="closeUsers()">✕</button></div>
+  <div class="modal-body">
+   <input type="hidden" id="userEditId">
+   <div class="form-grid">
+    <div class="form-group"><label>Nome completo *</label><input id="userName" required placeholder="Nome do colaborador"></div>
+    <div class="form-group"><label>Usuário de acesso *</label><input id="userLogin" required autocomplete="off" placeholder="Ex.: joao.silva"></div>
+    <div class="form-group"><label>Senha <span id="passwordRequiredMark">*</span></label><input id="userPassword" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres"></div>
+    <div class="form-group"><label>E-mail</label><input id="userEmail" type="email" placeholder="nome@empresa.com.br"></div>
+    <div class="form-group"><label>Perfil</label><select id="userRole"><option>Administrador</option><option>Gestor</option><option>Colaborador</option><option>Visualizador</option></select></div>
+    <div class="form-group"><label>Área / departamento</label><input id="userDepartment" placeholder="Ex.: TI, Operação, Suprimentos"></div>
+   </div>
+   <div class="user-credentials">Ao editar um usuário, deixe a senha em branco para manter a senha atual. A conta principal Admin é protegida e não pode ser excluída.</div>
+   <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:13px"><button class="btn" style="background:#edf2f7;color:#344054" type="button" onclick="resetUserForm()">Limpar</button><button class="btn primary" type="submit" id="saveUserButton">＋ Cadastrar usuário</button></div>
+   <div class="history-box"><h4>Usuários cadastrados</h4><div id="usersList" class="user-list"></div></div>
+   <p style="font-size:11px;color:#667085;margin:12px 0 0">As contas e permissões desta versão são armazenadas localmente neste navegador. Para uso corporativo com segurança real, autenticação e controle de acesso devem ser implementados em servidor.</p>
+  </div>
+  <div class="modal-foot"><button type="button" class="btn" style="background:#edf2f7" onclick="closeUsers()">Fechar</button></div>
+ </form>
+</dialog>
+<dialog id="statusesDialog">
+ <div class="modal-head"><h3>Cadastro de status</h3><button type="button" class="icon-btn" onclick="closeStatuses()">✕</button></div>
+ <div class="modal-body">
+  <form id="statusForm" onsubmit="saveStatus(event)">
+   <input type="hidden" id="statusEditOriginal">
+   <div class="form-grid">
+    <div class="form-group full"><label>Nome do status *</label><input id="statusName" required maxlength="40" placeholder="Ex.: AGUARDANDO FORNECEDOR"></div>
+    <div class="form-group"><label>Cor de fundo do status</label><input id="statusBgColor" type="color" value="#fff7df" style="height:42px;padding:4px"></div>
+    <div class="form-group"><label>Cor da letra</label><input id="statusTextColor" type="color" value="#9b7100" style="height:42px;padding:4px"></div>
+    <div class="form-group full"><label>Sugestões rápidas de cores</label><div id="statusPresets" class="status-presets">
+      <button type="button" class="status-preset" onclick="applyStatusPreset('#fff7df','#9b7100')"><span style="background:#fff7df;color:#9b7100">AGUARDANDO</span> Amarelo</button>
+      <button type="button" class="status-preset" onclick="applyStatusPreset('#e8f2ff','#1769aa')"><span style="background:#e8f2ff;color:#1769aa">EM ANDAMENTO</span> Azul</button>
+      <button type="button" class="status-preset" onclick="applyStatusPreset('#fff0f0','#c0392b')"><span style="background:#fff0f0;color:#c0392b">ATRASADO</span> Vermelho</button>
+      <button type="button" class="status-preset" onclick="applyStatusPreset('#e8f7ef','#12834f')"><span style="background:#e8f7ef;color:#12834f">CONCLUÍDO</span> Verde</button>
+      <button type="button" class="status-preset" onclick="applyStatusPreset('#eef0f3','#667085')"><span style="background:#eef0f3;color:#667085">CANCELADO</span> Cinza</button>
+      <button type="button" class="status-preset" onclick="applyStatusPreset('#f0eaff','#6941c6')"><span style="background:#f0eaff;color:#6941c6">PERSONALIZADO</span> Roxo</button>
+    </div></div>
+    <div class="form-group full"><label>Pré-visualização</label><div><span id="statusPreview" class="pill" style="background:#fff7df;color:#9b7100">EXEMPLO DE STATUS</span></div></div>
+   </div>
+   <div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn primary" type="submit" id="statusSaveButton">＋ Cadastrar status</button></div>
+  </form>
+  <div class="history-box"><h4>Status cadastrados</h4><div id="statusesList" class="user-list"></div></div>
+  <p style="font-size:11px;color:#667085;margin:12px 0 0">Status em uso não podem ser excluídos. Primeiro altere os projetos e tarefas que utilizam esse status.</p>
+ </div>
+ <div class="modal-foot"><button type="button" class="btn" style="background:#edf2f7" onclick="closeStatuses()">Fechar</button></div>
+</dialog>
+</div><!-- /appShell -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+const KEY='projetos_ti_v1';
+function loadSavedProjects(){
+ try {
+  const raw=window.localStorage ? localStorage.getItem(KEY) : null;
+  if(!raw) return null;
+  const parsed=JSON.parse(raw);
+  return Array.isArray(parsed) ? parsed : null;
+ } catch(err) {
+  console.warn('Não foi possível ler os dados salvos; usando dados de exemplo.',err);
+  return null;
+ }
+}
+let projects=loadSavedProjects()||[
+ {id:1,name:'ÁREA B - CFTV',owner:'EDUARDO',priority:'Mandatória',progress:20,status:'EM ANDAMENTO',start:'2026-10-26',end:'2026-11-04',comment:'Acompanhamento do mapa e definição da obra.',subs:[{id:11,name:'Solicitar mapa atualizado das posições das câmeras',owner:'EDUARDO',done:true},{id:12,name:'Definição de obra / contrato ZF',owner:'EDUARDO',done:false},{id:13,name:'Proposta / Suprimentos',owner:'ZF',done:false},{id:14,name:'Aprovação',owner:'AMANDUS',done:false},{id:15,name:'Execução',owner:'ZF',done:false}]},
+ {id:2,name:'ÁREA B - WIFI',owner:'EDUARDO',priority:'Mandatória',progress:0,status:'AGUARDANDO',start:'2026-10-26',end:'2026-11-04',comment:'Site Survey previsto para entrega até 04/11.',subs:[{id:21,name:'Site Survey - 4NEXT',owner:'EDUARDO',done:false}]},
+ {id:3,name:'GATE 6',owner:'EDUARDO',priority:'Alta',progress:90,status:'EM ANDAMENTO',start:'2026-09-22',end:'2026-11-06',comment:'Fornecedor definido para fornecimento dos materiais.',subs:[{id:31,name:'Suprimentos - pedido 20261619831',owner:'AIRAMIS',done:false}]},
+ {id:4,name:'REMOÇÃO ANTENAS WIFI - VALEPORT E ARMAZÉM',owner:'JOÃO PEDRO',priority:'Alta',progress:100,status:'CONCLUÍDO',start:'2026-10-21',end:'2026-11-12',comment:'Atividades acompanhadas pelas câmeras. Equipamentos armazenados no DC02.',subs:[{id:41,name:'Remoção das antenas',owner:'ZF',done:true},{id:42,name:'Relatório de equipamentos retirados',owner:'ZF',done:false}]},
+ {id:5,name:'CFTV - TEMPORADA CRUZEIROS',owner:'EDUARDO',priority:'Alta',progress:100,status:'CONCLUÍDO',start:'2026-10-26',end:'2026-12-12',comment:'Alinhamento com fornecedor para instalação de CFTV.',subs:[{id:51,name:'Alinhamento com fornecedor',owner:'EDUARDO',done:true}]},
+ {id:6,name:'ENTREGA SMARTPHONES',owner:'EDUARDO',priority:'Baixa',progress:100,status:'CONCLUÍDO',start:'2026-10-29',end:'2026-12-12',comment:'',subs:[{id:61,name:'Entrega dos equipamentos',owner:'MATHEUS',done:true}]}
+];
+// Registros antigos são classificados como PROJETO para preservar a compatibilidade.
+projects.forEach(p=>{p.type=p.type||'PROJETO';p.subs=Array.isArray(p.subs)?p.subs:[]});
+const USERS_KEY='projetos_ti_usuarios_v1';
+const STATUSES_KEY='projetos_ti_statuses_v1';
+const DEFAULT_STATUSES=['AGUARDANDO','AGUARDANDO','EM ANDAMENTO','ATRASADO','CONCLUÍDO','CANCELADO'];
+const DEFAULT_STATUS_STYLES={
+ 'AGUARDANDO':{bg:'#fff7df',text:'#9b7100'},
+ 'AGUARDANDO':{bg:'#fff7df',text:'#9b7100'},
+ 'EM ANDAMENTO':{bg:'#e8f2ff',text:'#1769aa'},
+ 'ATRASADO':{bg:'#fff0f0',text:'#c0392b'},
+ 'CONCLUÍDO':{bg:'#e8f7ef',text:'#12834f'},
+ 'CANCELADO':{bg:'#eef0f3',text:'#667085'}
+};
+function loadStatusData(){
+ try{
+  const raw=JSON.parse(localStorage.getItem(STATUSES_KEY)||'null');
+  if(Array.isArray(raw))return {names:raw,styles:{...DEFAULT_STATUS_STYLES}};
+  if(raw&&Array.isArray(raw.names))return {names:raw.names,styles:{...DEFAULT_STATUS_STYLES,...(raw.styles||{})}};
+ }catch(e){}
+ return {names:DEFAULT_STATUSES.slice(),styles:{...DEFAULT_STATUS_STYLES}};
+}
+const loadedStatusData=loadStatusData();
+let statuses=[...new Set(['AGUARDANDO',...loadedStatusData.names.filter(x=>String(x).trim().toLocaleUpperCase('pt-BR')!=='PENDENTE')])];
+let statusStyles=loadedStatusData.styles;
+if(!statusStyles['AGUARDANDO'])statusStyles['AGUARDANDO']={bg:'#fff7df',text:'#9b7100'};
+function persistStatuses(){try{localStorage.setItem(STATUSES_KEY,JSON.stringify({names:statuses,styles:statusStyles}))}catch(e){alert('Não foi possível salvar os status neste navegador.')}}
+function statusIs(s,w){return String(s||'').trim().toLocaleUpperCase('pt-BR')===w}
+function localTodayISO(){
+ const d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+ return `${y}-${m}-${day}`;
+}
+function syncOverdueTaskStatuses(){
+ const today=localTodayISO();let changed=false,addedOverdueStatus=false;
+ projects.forEach(project=>(project.subs||[]).forEach(task=>{
+  const status=task.status||(task.done?'CONCLUÍDO':'AGUARDANDO');
+  const completed=statusIs(status,'CONCLUÍDO')||task.done===true||!!task.completedAt;
+  const cancelled=statusIs(status,'CANCELADO');
+  if(completed||cancelled){
+   if(task._autoOverdue){delete task._autoOverdue;delete task._statusBeforeOverdue;changed=true}
+   return;
+  }
+  const isPastDue=!!task.end&&task.end<today;
+  if(isPastDue&& !statusIs(status,'ATRASADO')){
+   if(!statuses.some(x=>statusIs(x,'ATRASADO'))){statuses.push('ATRASADO');addedOverdueStatus=true}
+   if(!task._autoOverdue)task._statusBeforeOverdue=status||'AGUARDANDO';
+   task._autoOverdue=true;task.status='ATRASADO';task.done=false;task.completedAt='';
+   task.history=Array.isArray(task.history)?task.history:[];
+   task.history.push({date:new Date().toLocaleString('pt-BR'),author:'Sistema',note:`Status alterado automaticamente para ATRASADO: prazo previsto em ${fmt(task.end)}.`});
+   changed=true;
+  }else if(!isPastDue&&task._autoOverdue&&statusIs(status,'ATRASADO')){
+   const previous=task._statusBeforeOverdue||'AGUARDANDO';
+   task.status=previous;delete task._autoOverdue;delete task._statusBeforeOverdue;
+   task.history=Array.isArray(task.history)?task.history:[];
+   task.history.push({date:new Date().toLocaleString('pt-BR'),author:'Sistema',note:`Status restaurado para ${previous}: previsão de término atualizada para uma data futura.`});
+   changed=true;
+  }
+ }));
+ if(addedOverdueStatus)persistStatuses();
+ if(changed)persist();
+ return changed;
+}
+function getStatusStyle(name){return statusStyles[name]||{bg:'#eef2ff',text:'#454f91'}}
+function statusInlineStyle(name){const c=getStatusStyle(name);return `background:${c.bg};color:${c.text};`}
+function applyStatusPreset(bg,text){$('statusBgColor').value=bg;$('statusTextColor').value=text;updateStatusPreview()}
+function updateStatusPreview(){const el=$('statusPreview');if(!el)return;el.textContent=$('statusName').value.trim()||'EXEMPLO DE STATUS';el.style.background=$('statusBgColor').value;el.style.color=$('statusTextColor').value}
+
+function loadUsers(){try{const data=JSON.parse(localStorage.getItem(USERS_KEY)||'[]');return Array.isArray(data)?data:[]}catch(e){return []}}
+let users=loadUsers();
+const PRIMARY_ADMIN={id:'primary-admin',name:'Admin',username:'Admin',password:'jbst@2026',email:'',role:'Administrador',department:'Administração',isPrimaryAdmin:true,createdAt:'2026-11-04T00:00:00.000Z'};
+if(!users.some(u=>u.isPrimaryAdmin||String(u.username||'').toLowerCase()==='admin')){
+ users.unshift({...PRIMARY_ADMIN});try{localStorage.setItem(USERS_KEY,JSON.stringify(users))}catch(e){}
+}else{
+ const admin=users.find(u=>u.isPrimaryAdmin||String(u.username||'').toLowerCase()==='admin');
+ Object.assign(admin,{id:'primary-admin',name:'Admin',username:'Admin',password:'jbst@2026',role:'Administrador',isPrimaryAdmin:true});
+ try{localStorage.setItem(USERS_KEY,JSON.stringify(users))}catch(e){}
+}
+let currentUser=null;
+function saveUsers(){try{localStorage.setItem(USERS_KEY,JSON.stringify(users))}catch(e){alert('Não foi possível salvar os usuários neste navegador.');}}
+projects.forEach(p=>{
+ if(String(p.status||'').trim().toLocaleUpperCase('pt-BR')==='PENDENTE')p.status='AGUARDANDO';
+ (p.subs||[]).forEach(s=>{
+  if(String(s.status||'').trim().toLocaleUpperCase('pt-BR')==='PENDENTE')s.status='AGUARDANDO';
+  if(s.progress===undefined)s.progress=s.done?100:0;
+  if(!s.status)s.status=s.done?'CONCLUÍDO':'AGUARDANDO';
+  if(!s.start)s.start='';if(!s.end)s.end='';if(!s.completedAt)s.completedAt='';
+ });
+});
+let draftSubs=[];
+const expandedProjects=new Set();
+const expandedGanttProjects=new Set();
+const $=id=>document.getElementById(id);
+function canManage(){return !!currentUser&&['Administrador','Gestor'].includes(currentUser.role)}
+function canWrite(){return !!currentUser&&currentUser.role!=='Visualizador'}
+function requireWrite(){if(!canWrite()){alert('Seu perfil possui apenas permissão de visualização.');return false}return true}
+function requireManage(){if(!canManage()){alert('Esta função é exclusiva dos perfis Administrador e Gestor.');return false}return true}
+function login(e){
+ e.preventDefault();const username=$('loginUsername').value.trim().toLowerCase(),password=$('loginPassword').value;
+ const user=users.find(u=>String(u.username||'').trim().toLowerCase()===username&&u.password===password);
+ if(!user){$('loginError').hidden=false;return}
+ currentUser=user;$('loginError').hidden=true;$('loginScreen').hidden=true;$('appShell').hidden=false;
+ $('currentUserLabel').textContent=`${user.name} · ${user.role}`;applyPermissions();render();
+}
+function logout(){
+ const shouldExport=confirm('Antes de sair, recomendamos exportar uma cópia atualizada de TODOS os dados do sistema em Excel.\n\nDeseja exportar agora?');
+ if(shouldExport){
+  if(!requireManage()){alert('Somente Administrador ou Gestor pode exportar a base completa. Solicite a exportação a um usuário autorizado antes de sair.');return}
+  exportExcel();
+ }else if(!confirm('Você escolheu não exportar os dados. Deseja realmente sair sem gerar um backup?')){
+  return;
+ }
+ currentUser=null;$('appShell').hidden=true;$('loginScreen').hidden=false;
+ $('loginPassword').value='';$('loginUsername').value='';$('loginError').hidden=true;
+}
+function applyPermissions(){
+ const manager=canManage(),writer=canWrite();
+ document.querySelectorAll('[data-admin-only]').forEach(el=>el.hidden=!manager);
+ document.querySelectorAll('[data-write-only]').forEach(el=>el.hidden=!writer);
+ const newProject=$('projectForm')?.querySelector('button[type="submit"]');
+ if(newProject)newProject.hidden=!writer;
+ const taskSave=$('subtaskForm')?.querySelector('button[type="submit"]');
+ if(taskSave)taskSave.hidden=!writer;
+}
+function persist(){
+ try { if(window.localStorage) localStorage.setItem(KEY,JSON.stringify(projects)); }
+ catch(err){ alert('Não foi possível salvar neste navegador. Faça a exportação dos dados para manter um backup.'); console.warn(err); }
+}
+function fmt(d){if(!d)return '—';return new Date(d+'T12:00:00').toLocaleDateString('pt-BR')}
+function statusClass(s){return statusIs(s,'CONCLUÍDO')?'status-concluido':statusIs(s,'EM ANDAMENTO')?'status-andamento':statusIs(s,'ATRASADO')?'status-atrasado':statusIs(s,'CANCELADO')?'status-cancelado':(statusIs(s,'AGUARDANDO')||statusIs(s,'AGUARDANDO'))?'status-pendente':'status-custom'}
+function derivedStatus(p){
+ const progress=Math.max(0,Math.min(100,Number(p?.progress)||0));
+ if(statusIs(p?.status,'CANCELADO'))return 'CANCELADO';
+ if(progress>=100||statusIs(p?.status,'CONCLUÍDO')||p?.completedAt)return 'CONCLUÍDO';
+ // Usa a data local do navegador (não UTC), evitando atraso indevido no período da noite.
+ if(p?.end&&p.end<localTodayISO())return 'ATRASADO';
+ return progress>0?'EM ANDAMENTO':'AGUARDANDO';
+}
+function refreshStatusSelects(){
+ const filter=$('statusFilter'),project=$('status'),task=$('editSubStatus');
+ if(filter){const v=filter.value||'TODOS';filter.innerHTML='<option value="TODOS">Todos os projetos</option><option value="ATIVOS">Projetos ativos (exceto concluídos e cancelados)</option><option value="">Todos os status</option>'+statuses.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');filter.value=[...filter.options].some(o=>o.value===v)?v:'TODOS'}
+ [project,task].forEach(sel=>{if(!sel)return;const v=sel.value;sel.innerHTML=statuses.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');sel.value=statuses.includes(v)?v:(statuses.includes('AGUARDANDO')?'AGUARDANDO':statuses[0])});
+}
+let sortDirection='asc';
+const SORT_STORAGE_KEY='projetos_ti_sort_v1';
+function toggleSortDirection(){
+ sortDirection=sortDirection==='asc'?'desc':'asc';
+ $('sortDirectionButton').textContent=sortDirection==='asc'?'↑ Crescente':'↓ Decrescente';
+ render();
+}
+function sortByColumn(key){
+ const select=$('projectSort');
+ if(select.value===key)sortDirection=sortDirection==='asc'?'desc':'asc';
+ else{select.value=key;sortDirection='asc'}
+ $('sortDirectionButton').textContent=sortDirection==='asc'?'↑ Crescente':'↓ Decrescente';
+ render();
+}
+function sortProjects(list){
+ const key=$('projectSort')?.value||'';
+ if(!key)return list;
+ const priorityRank={'Mandatória':0,'Alta':1,'Média':2,'Baixa':3};
+ const get=p=>{
+  if(key==='summary')return (p.summary||'').toLocaleLowerCase('pt-BR');
+  if(key==='type')return p.type||'PROJETO';
+  if(key==='priority')return priorityRank[p.priority]??99;
+  if(key==='progress')return Number(p.progress)||0;
+  if(key==='tasks')return (p.subs||[]).length;
+  if(key==='status')return String(derivedStatus(p)||'').toLocaleLowerCase('pt-BR');
+  if(key==='start'||key==='end')return p[key]||'';
+  return String(p[key]||'').toLocaleLowerCase('pt-BR');
+ };
+ return list.slice().sort((a,b)=>{
+  const av=get(a),bv=get(b);let cmp;
+  if(typeof av==='number'&&typeof bv==='number')cmp=av-bv;
+  else cmp=String(av).localeCompare(String(bv),'pt-BR',{numeric:true,sensitivity:'base'});
+  return sortDirection==='asc'?cmp:-cmp;
+ });
+}
+function updateSortHeaders(){
+ document.querySelectorAll('th[data-sort]').forEach(th=>{
+  const key=th.dataset.sort,base=th.dataset.baseLabel||th.textContent.replace(/[↑↓]$/,'').trim();
+  th.dataset.baseLabel=base;
+  th.innerHTML=esc(base)+( $('projectSort')?.value===key?` <span class="sort-indicator">${sortDirection==='asc'?'↑':'↓'}</span>`:'');
+ });
+}
+function render(){
+ projects.forEach(p=>{
+  if(!statusIs(p.status,'CONCLUÍDO')&&!statusIs(p.status,'CANCELADO')){
+   const effective=derivedStatus(p);
+   if(p.status!==effective)p.status=effective;
+  }
+ });
+ syncOverdueTaskStatuses();
+ refreshStatusSelects();const q=$('search').value.toLowerCase(),sf=$('statusFilter').value.trim(),pf=$('priorityFilter').value,tf=$('typeFilter')?.value||'';
+ $('total').textContent=projects.length;$('running').textContent=projects.filter(p=>derivedStatus(p)==='EM ANDAMENTO').length;$('pending').textContent=projects.filter(p=>derivedStatus(p)==='AGUARDANDO').length;$('done').textContent=projects.filter(p=>derivedStatus(p)==='CONCLUÍDO').length;$('overdue').textContent=projects.filter(p=>derivedStatus(p)==='ATRASADO').length;
+ const filtered=sortProjects(projects.filter(p=>(!tf||(p.type||'PROJETO')===tf)&&(!q||[p.name,p.owner,p.comment].join(' ').toLowerCase().includes(q))&&(sf==='TODOS'?true:(sf==='ATIVOS'?(derivedStatus(p)!=='CONCLUÍDO'&&derivedStatus(p)!=='CANCELADO'):(!sf||derivedStatus(p)===sf)))&&(!pf||p.priority===pf)));
+ $('projectRows').innerHTML=filtered.length?filtered.map(p=>{
+   const expanded=expandedProjects.has(p.id);
+   const detail=p.subs.length?`<tr class="subtask-detail"><td colspan="10"><table class="subtask-table"><thead><tr><th>Tarefa</th><th>Último comentário</th><th>Responsável</th><th>Progresso</th><th>Status</th><th>Início</th><th>Previsão fim</th><th>Data conclusão</th><th>Ações</th></tr></thead><tbody>
+   ${p.subs.slice().sort((a,b)=>{
+    const da=a.start||'',db=b.start||'';
+    if(!da&&!db)return 0;
+    if(!da)return 1;
+    if(!db)return -1;
+    return da.localeCompare(db);
+   }).map(s=>{const st=s.status||(s.done?'CONCLUÍDO':'AGUARDANDO');const prog=s.progress??(s.done?100:0);return `<tr>
+    <td><div style="display:flex;align-items:center;gap:7px"><input type="checkbox" ${s.done||st==='CONCLUÍDO'?'checked':''} ${canWrite()?'':'disabled'} onchange="toggleSub(${p.id},${s.id},this.checked)"><button type="button" class="subtask-title-btn" style="${s.done||st==='CONCLUÍDO'?'text-decoration:line-through;color:#98a2b3':''}" onclick="openSubtask(${p.id},${s.id})" title="Editar tarefa e consultar histórico">${esc(s.name)}</button></div></td>
+    <td><div class="last-comment">${esc(getLastUserComment(s)||'—')}</div></td>
+    <td>${esc(s.owner||'—')}</td><td><div class="subtask-progress"><div class="progress"><span style="width:${prog}%"></span></div><span>${prog}%</span></div></td>
+    <td><span class="pill ${statusClass(st)}" style="${statusInlineStyle(st)}">${esc(st)}</span></td><td>${fmt(s.start)}</td><td>${fmt(s.end)}</td><td>${fmt(s.completedAt)}</td><td>${canWrite()?`<button type="button" class="icon-btn" title="Excluir tarefa" onclick="deleteSub(${p.id},${s.id})">🗑</button>`:'—'}</td>
+   </tr>`}).join('')}</tbody></table></td></tr>`:'<tr class="subtask-detail"><td colspan="10" style="color:#667085;padding-left:42px">Nenhuma tarefa cadastrada.</td></tr>';
+   return `<tr class="project-row">
+    <td><span class="initiative-type ${(p.type||'PROJETO')==='PROJETO'?'project':'demand'}">${esc(p.type||'PROJETO')}</span></td>
+    <td><div class="project-name">${esc(p.name)}</div><div class="sub-count">${p.subs.length} tarefa(s)</div><button class="toggle-sub" onclick="toggleSubtasks(${p.id})">${expanded?'▴ Ocultar tarefas':'▾ Exibir tarefas'}</button></td><td><div class="summary-lines">${(p.summary||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(x=>`<div>${esc(x)}</div>`).join('')||'—'}</div></td><td class="owner">${esc(p.owner||'—')}</td><td><span class="priority ${p.priority}">${esc(p.priority)}</span></td>
+    <td><div class="progress"><span style="width:${p.progress}%"></span></div><div class="progress-label">${p.progress}% concluído</div></td>
+    <td><span class="pill ${statusClass(derivedStatus(p))}" style="${statusInlineStyle(derivedStatus(p))}">${esc(derivedStatus(p))}</span></td><td>${fmt(p.start)}</td><td>${fmt(p.end)}</td>
+    <td><div class="row-actions">${canWrite()?`<button class="icon-btn" title="Incluir tarefa" aria-label="Incluir tarefa" onclick="addTaskToProject(${p.id})">＋</button><button class="icon-btn" title="Editar projeto" aria-label="Editar projeto" onclick="openProject(${p.id})">✎</button>`:''}${canManage()?`<button class="icon-btn" title="Excluir projeto" aria-label="Excluir projeto" onclick="deleteProject(${p.id})">🗑</button>`:''}${!canWrite()?'—':''}</div></td></tr>
+    ${expanded?detail:''}`;
+ }).join(''):`<tr><td colspan="10"><div class="empty"><b>Nenhum projeto encontrado</b>Cadastre um projeto ou ajuste os filtros.</div></td></tr>`;
+  if($('kanbanPage')&&!$('kanbanPage').hidden)renderKanban();
+  if($('dailyPage')&&!$('dailyPage').hidden)renderDailyProjectSummaries();
+}
+
+function switchPage(page){
+ const isKanban=page==='kanban',isDaily=page==='daily';
+ $('dashboardPage').hidden=page!=='dashboard';
+ $('kanbanPage').hidden=!isKanban;
+ $('dailyPage').hidden=!isDaily;
+ $('tabDashboard').classList.toggle('active',page==='dashboard');
+ $('tabKanban').classList.toggle('active',isKanban);
+ $('tabDaily').classList.toggle('active',isDaily);
+ if(isKanban)renderKanban();
+ if(isDaily){if(!$('dailyDate').value)$('dailyDate').value=todayDailyKey();loadDaily();}
+ window.scrollTo(0,0);
+}
+const KANBAN_STATUSES=()=>statuses.slice();
+function renderKanban(){
+ syncOverdueTaskStatuses();
+ const board=$('kanbanBoard');if(!board)return;
+ const search=($('kanbanSearch')?.value||'').trim().toLowerCase();
+ const projectFilter=$('kanbanProjectFilter');
+ const selectedProject=projectFilter?.value||'';
+ if(projectFilter){
+  const current=projectFilter.value;
+  projectFilter.innerHTML='<option value="">Todos os projetos</option>'+projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  projectFilter.value=projects.some(p=>String(p.id)===current)?current:'';
+ }
+ const tasks=projects.flatMap(p=>(p.subs||[]).map(t=>({project:p,task:t,status:t.status||(t.done?'CONCLUÍDO':'AGUARDANDO')})))
+  .filter(x=>(!selectedProject||String(x.project.id)===selectedProject)&&(!search||[x.task.name,x.project.name,x.task.owner].join(' ').toLowerCase().includes(search)))
+  .sort((a,b)=>{
+   const da=a.task.start||'',db=b.task.start||'';
+   if(!da&&!db)return 0;
+   if(!da)return 1;
+   if(!db)return -1;
+   return da.localeCompare(db);
+  });
+ board.innerHTML=KANBAN_STATUSES().map(status=>{
+  const items=tasks.filter(x=>x.status===status);
+  return `<section class="kanban-column">
+   <div class="kanban-column-head"><span class="pill" style="${statusInlineStyle(status)}">${esc(status)}</span><span class="kanban-count">${items.length}</span></div>
+   <div class="kanban-dropzone" data-status="${status}" ondragover="kanbanDragOver(event)" ondragleave="kanbanDragLeave(event)" ondrop="kanbanDrop(event)">
+    ${items.length?items.map(({project,task})=>`<article class="kanban-card" draggable="${canWrite()}" data-project-id="${project.id}" data-task-id="${task.id}" ${canWrite()?'ondragstart="kanbanDragStart(event)" ondragend="kanbanDragEnd(event)"':''}>
+      <div class="kanban-card-title">${esc(task.name)}</div>
+      <div class="kanban-card-project">${esc(project.name)}</div>
+      <div class="kanban-card-meta"><span>${esc(task.owner||'Sem responsável')}</span><span>${task.progress??(task.done?100:0)}%</span></div>
+      <div class="kanban-card-progress"><span style="width:${Math.max(0,Math.min(100,Number(task.progress??(task.done?100:0))||0))}%"></span></div>
+      <div class="kanban-card-meta"><span>Início: ${fmt(task.start)}</span><span>Fim: ${fmt(task.end)}</span></div>
+      <div class="kanban-card-actions"><button type="button" onclick="openSubtask(${project.id},${task.id})">${canWrite()?'Editar tarefa':'Visualizar tarefa'}</button></div>
+     </article>`).join(''):'<div class="kanban-empty">Solte uma tarefa aqui</div>'}
+   </div>
+  </section>`;
+ }).join('');
+}
+function kanbanDragStart(event){if(!requireWrite()){event.preventDefault();return}
+ const card=event.currentTarget;
+ event.dataTransfer.setData('text/plain',JSON.stringify({projectId:Number(card.dataset.projectId),taskId:Number(card.dataset.taskId)}));
+ event.dataTransfer.effectAllowed='move';card.classList.add('dragging');
+}
+function kanbanDragEnd(event){event.currentTarget.classList.remove('dragging');document.querySelectorAll('.kanban-dropzone').forEach(el=>el.classList.remove('drag-over'))}
+function kanbanDragOver(event){event.preventDefault();event.dataTransfer.dropEffect='move';event.currentTarget.classList.add('drag-over')}
+function kanbanDragLeave(event){if(!event.currentTarget.contains(event.relatedTarget))event.currentTarget.classList.remove('drag-over')}
+function kanbanDrop(event){if(!requireWrite())return;
+ event.preventDefault();
+ const zone=event.currentTarget;zone.classList.remove('drag-over');
+ let data;try{data=JSON.parse(event.dataTransfer.getData('text/plain'))}catch(e){return}
+ const project=projects.find(p=>p.id===data.projectId),task=project?.subs.find(t=>t.id===data.taskId);
+ const newStatus=zone.dataset.status;if(!project||!task||!statuses.includes(newStatus))return;
+ const oldStatus=task.status||(task.done?'CONCLUÍDO':'AGUARDANDO');if(oldStatus===newStatus)return;
+ task.status=newStatus;task.done=newStatus==='CONCLUÍDO';
+ if(newStatus==='CONCLUÍDO'){task.progress=100;task.completedAt=task.completedAt||new Date().toISOString().slice(0,10)}
+ else{task.completedAt='';if(oldStatus==='CONCLUÍDO'&&Number(task.progress)>=100)task.progress=0}
+ task.history=Array.isArray(task.history)?task.history:[];
+ task.history.push({date:new Date().toLocaleString('pt-BR'),author:'Sistema',note:`Status alterado pelo Kanban de ${oldStatus} para ${newStatus}.`});
+ syncProjectProgressFromTasks(project);persist();render();
+}
+
+function toggleSubtasks(id){if(expandedProjects.has(id))expandedProjects.delete(id);else expandedProjects.add(id);render()}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function getLastUserComment(task){
+ const history=Array.isArray(task?.history)?task.history:[];
+ const manual=history.filter(h=>{
+  const note=String(h?.note||'').trim();
+  const author=String(h?.author||'').trim().toLocaleLowerCase('pt-BR');
+  if(!note||author==='sistema')return false;
+  return !/^status alterado (de |pelo kanban de )/i.test(note);
+ });
+ return manual.length?manual[manual.length-1].note:'';
+}
+
+function ownerOptions(selected=''){
+ const names=[...new Set(users.map(u=>u.name).filter(Boolean))];
+ const safeSelected=String(selected||'');
+ let opts='<option value="">Selecione um responsável</option>'+names.map(n=>`<option value="${esc(n)}" ${n===safeSelected?'selected':''}>${esc(n)}</option>`).join('');
+ if(safeSelected&&!names.includes(safeSelected))opts+=`<option value="${esc(safeSelected)}" selected>${esc(safeSelected)} (não cadastrado)</option>`;
+ return opts;
+}
+function refreshOwnerSelects(){
+ const projectOwner=$('owner');if(projectOwner){const v=projectOwner.value;projectOwner.innerHTML=ownerOptions(v)}
+ const subOwner=$('subOwner');if(subOwner){const v=subOwner.value;subOwner.innerHTML=ownerOptions(v)}
+}
+
+function projectStatusChanged(){
+ if($('status').value!=='CONCLUÍDO')$('projectCompleted').value='';
+ else if(!$('projectCompleted').value)$('projectCompleted').value=new Date().toISOString().slice(0,10);
+}
+function projectCompletionDateChanged(){
+ if($('projectCompleted').value){$('status').value='CONCLUÍDO';$('progress').value=100;}
+ else if($('status').value==='CONCLUÍDO'){$('status').value='EM ANDAMENTO';}
+}
+function taskProgressAverage(p){
+ const tasks=p?.subs||[];
+ if(!tasks.length)return 0;
+ return Math.round(tasks.reduce((sum,t)=>sum+Math.max(0,Math.min(100,Number(t.progress??(t.done?100:0))||0)),0)/tasks.length);
+}
+function setAutoProgressUI(){
+ const enabled=$('autoProgress').checked;
+ $('progress').disabled=enabled;
+ if(enabled){
+  const p=projects.find(x=>x.id===Number($('projectId').value));
+  $('progress').value=taskProgressAverage({subs:p?.subs||[]});
+ }
+}
+function syncProjectProgressFromTasks(p){
+ if(p?.autoProgress)p.progress=taskProgressAverage(p);
+}
+function openProject(id){if(!requireWrite())return;
+ const p=projects.find(x=>x.id===id);
+ $('projectForm').reset();refreshOwnerSelects();$('projectId').value=p?.id||'';$('projectDialogTitle').textContent=p?'Editar projeto':'Novo projeto';
+ $('initiativeType').value=p?.type||'PROJETO';$('name').value=p?.name||'';$('summary').value=p?.summary||'';$('owner').value=p?.owner||'';$('priority').value=p?.priority||'Média';$('start').value=p?.start||'';$('end').value=p?.end||'';$('status').value=p?derivedStatus(p):'AGUARDANDO';$('progress').value=p?.progress??0;$('projectCompleted').value=p?.completedAt||'';$('workWeekends').checked=p?.workWeekends===true;$('showInDaily').checked=p?.showInDaily===true;$('autoProgress').checked=p?.autoProgress===true;$('comment').value=p?.comment||'';setAutoProgressUI();
+ $('projectDialog').showModal();
+}
+function addTaskToProject(id){if(!requireWrite())return;
+ const p=projects.find(x=>x.id===id);if(!p)return;
+ $('editProjectId').value=id;$('editSubtaskId').value='';
+ $('editSubName').value='';$('editSubOwner').innerHTML=ownerOptions('');
+ $('editSubProgress').value=0;$('editSubStatus').value='AGUARDANDO';
+ $('editSubStart').value='';$('editSubEnd').value='';$('editSubCompleted').value='';
+ $('historyNote').value='';
+ $('subtaskDialog').querySelector('.modal-head h3').textContent='Nova tarefa — '+p.name;
+ $('subtaskDialog').querySelector('.modal-foot button[type="submit"]').textContent='Salvar tarefa';
+ $('subtaskDialog').querySelectorAll('.history-box').forEach((el,i)=>el.hidden=true);
+ $('subtaskForm').querySelectorAll('input,select,textarea').forEach(el=>el.disabled=false);
+ $('subtaskDialog').querySelector('.modal-foot button[type="submit"]').hidden=false;
+ $('historyList').innerHTML='';
+ $('subtaskDialog').showModal();
+ requestAnimationFrame(()=>{$('editSubName').focus();});
+}
+function closeProject(){$('projectDialog').close()}
+function saveProject(e){if(!requireWrite())return;
+ e.preventDefault();
+ let id=Number($('projectId').value);const old=projects.find(p=>p.id===id);
+ let p={id:id||Date.now(),type:$('initiativeType').value||'PROJETO',name:$('name').value.trim(),summary:$('summary').value.trim(),owner:$('owner').value.trim(),priority:$('priority').value,start:$('start').value,end:$('end').value,status:$('status').value,progress:Math.max(0,Math.min(100,Number($('progress').value)||0)),autoProgress:$('autoProgress').checked,completedAt:$('projectCompleted').value,workWeekends:$('workWeekends').checked,showInDaily:$('showInDaily').checked,comment:$('comment').value.trim(),subs:old?old.subs:[]};
+ if(p.status!=='CONCLUÍDO')p.completedAt='';
+ if(p.status==='CONCLUÍDO'){p.progress=100;if(!p.completedAt)p.completedAt=new Date().toISOString().slice(0,10)}
+ if(p.completedAt){p.status='CONCLUÍDO';p.progress=100}
+ if(p.autoProgress&&p.status!=='CONCLUÍDO')p.progress=taskProgressAverage(p);
+ if(p.progress===100&&p.status!=='CANCELADO')p.status='CONCLUÍDO';
+ // Regra automática do semáforo do projeto:
+ // 0% = AGUARDANDO; de 1% a 99% = EM ANDAMENTO;
+ // prazo anterior a hoje com menos de 100% = ATRASADO.
+ if(p.status!=='CONCLUÍDO'&&p.status!=='CANCELADO'){
+  if(p.end&&p.end<localTodayISO())p.status='ATRASADO';
+  else p.status=p.progress>0?'EM ANDAMENTO':'AGUARDANDO';
+ }
+ if(p.status==='CANCELADO'){
+  const now=new Date().toISOString().slice(0,10);
+  p.subs=p.subs.map(s=>{
+   const st=s.status||(s.done?'CONCLUÍDO':'AGUARDANDO');
+   if(st==='CONCLUÍDO'||st==='CANCELADO')return s;
+   s.status='CANCELADO';s.done=false;
+   s.history=Array.isArray(s.history)?s.history:[];
+   s.history.push({date:new Date().toLocaleString('pt-BR'),author:'Sistema',note:'Tarefa cancelada automaticamente porque o projeto foi cancelado.'});
+   return s;
+  });
+ }
+ if(old)projects=projects.map(x=>x.id===id?p:x);else projects.unshift(p);
+ persist();closeProject();render();
+}
+function deleteProject(id){if(!requireManage())return;const p=projects.find(x=>x.id===id);if(confirm(`Excluir o projeto "${p.name}" e suas tarefas?`)){projects=projects.filter(x=>x.id!==id);persist();render()}}
+function toggleSub(pid,sid,done){if(!requireWrite())return;let p=projects.find(x=>x.id===pid),s=p.subs.find(x=>x.id===sid);s.done=done;s.progress=done?100:0;s.status=done?'CONCLUÍDO':'AGUARDANDO';s.completedAt=done?new Date().toISOString().slice(0,10):'';s.history=Array.isArray(s.history)?s.history:[];s.history.push({date:new Date().toLocaleString('pt-BR'),author:'Sistema',note:done?'Tarefa marcada como concluída.':'Tarefa reaberta e marcada como pendente.'});if(!done)s.completedAt='';syncProjectProgressFromTasks(p);persist();render()}
+
+function taskStatusChanged(){
+ if($('editSubStatus').value!=='CONCLUÍDO')$('editSubCompleted').value='';
+ else if(!$('editSubCompleted').value)$('editSubCompleted').value=new Date().toISOString().slice(0,10);
+}
+function taskCompletionDateChanged(){
+ if($('editSubCompleted').value){$('editSubStatus').value='CONCLUÍDO';$('editSubProgress').value=100;}
+ else if($('editSubStatus').value==='CONCLUÍDO'){$('editSubStatus').value='EM ANDAMENTO';}
+}
+function openSubtask(pid,sid){
+ const p=projects.find(x=>x.id===pid),s=p?.subs.find(x=>x.id===sid);if(!s)return;
+ $('editProjectId').value=pid;$('editSubtaskId').value=sid;
+ $('editSubName').value=s.name||'';$('editSubOwner').innerHTML=ownerOptions(s.owner||'');$('editSubOwner').value=s.owner||'';
+ $('editSubProgress').value=s.progress??(s.done?100:0);
+ $('editSubStatus').value=s.status||(s.done?'CONCLUÍDO':'AGUARDANDO');
+ $('editSubStart').value=s.start||'';$('editSubEnd').value=s.end||'';$('editSubCompleted').value=s.completedAt||'';
+ $('historyNote').value='';
+ renderSubtaskHistory(s);
+ $('subtaskDialog').querySelector('.modal-head h3').textContent='Editar tarefa';
+ $('subtaskDialog').querySelector('.modal-foot button[type="submit"]').textContent='Salvar alterações';
+ $('subtaskDialog').querySelectorAll('.history-box').forEach(el=>el.hidden=false);
+ $('subtaskDialog').showModal();
+ const readOnly=!canWrite();
+ $('subtaskForm').querySelectorAll('input,select,textarea').forEach(el=>{if(!['editProjectId','editSubtaskId'].includes(el.id))el.disabled=readOnly});
+ $('historyNote').disabled=readOnly;
+ $('subtaskDialog').querySelector('.modal-foot button[type="submit"]').hidden=readOnly;
+ $('subtaskDialog').querySelectorAll('.history-box').forEach(el=>el.hidden=false);
+ $('subtaskDialog').querySelector('.modal-foot button[type="submit"]').hidden=readOnly;
+}
+function renderSubtaskHistory(s){
+ const history=Array.isArray(s.history)?s.history:[];
+ $('historyList').innerHTML=history.length?history.slice().reverse().map(h=>`<div class="history-item"><div class="history-meta">${esc(h.date||'')} · ${esc(h.author||'Responsável não informado')}</div><div>${esc(h.note||'')}</div></div>`).join(''):'<div class="history-empty">Ainda não há atualizações registradas para esta tarefa.</div>';
+}
+function closeSubtask(){
+ $('subtaskDialog').close();
+ $('subtaskDialog').querySelectorAll('.history-box').forEach(el=>el.hidden=false);
+ $('subtaskDialog').querySelector('.modal-head h3').textContent='Editar tarefa';
+ $('subtaskDialog').querySelector('.modal-foot button[type="submit"]').textContent='Salvar alterações';
+}
+function saveSubtaskEdit(e){if(!requireWrite())return;
+ e.preventDefault();
+ const pid=Number($('editProjectId').value),sid=Number($('editSubtaskId').value);
+ const p=projects.find(x=>x.id===pid);if(!p)return;
+ const isNew=!sid;
+ let s=isNew?{id:Date.now()+Math.floor(Math.random()*1000),history:[]}:p.subs.find(x=>x.id===sid);
+ if(!s)return;
+ const oldStatus=s.status||(s.done?'CONCLUÍDO':'AGUARDANDO');
+ s.name=$('editSubName').value.trim();s.owner=$('editSubOwner').value.trim();
+ s.progress=Math.max(0,Math.min(100,Number($('editSubProgress').value)||0));
+ s.status=$('editSubStatus').value;s.start=$('editSubStart').value;s.end=$('editSubEnd').value;
+ s.completedAt=$('editSubCompleted').value;
+ if(s.completedAt)s.status='CONCLUÍDO';
+ if(s.status==='CONCLUÍDO'){s.progress=100;s.done=true;if(!s.completedAt)s.completedAt=localTodayISO();delete s._autoOverdue;delete s._statusBeforeOverdue}
+ else{s.done=false;s.completedAt=''}
+ s.history=Array.isArray(s.history)?s.history:[];
+ let autoOverdueOnSave=false;
+ if(!s.done&&!statusIs(s.status,'CANCELADO')&&s.end&&s.end<localTodayISO()){
+  if(!s._autoOverdue)s._statusBeforeOverdue=s.status||'AGUARDANDO';
+  s._autoOverdue=true;s.status='ATRASADO';s.completedAt='';autoOverdueOnSave=true;
+  if(!statuses.some(x=>statusIs(x,'ATRASADO'))){statuses.push('ATRASADO');persistStatuses()}
+  s.history.push({date:new Date().toLocaleString('pt-BR'),author:'Sistema',note:`Status alterado automaticamente para ATRASADO: prazo previsto em ${fmt(s.end)}.`});
+ }
+ const note=$('historyNote').value.trim(),author=currentUser?.name||'Usuário não identificado';
+ if(note)s.history.push({date:new Date().toLocaleString('pt-BR'),author,note});
+ else if(!isNew&&oldStatus!==s.status&&!autoOverdueOnSave)s.history.push({date:new Date().toLocaleString('pt-BR'),author,note:`Status alterado de ${oldStatus} para ${s.status}.`});
+ if(isNew)p.subs.push(s);
+ syncProjectProgressFromTasks(p);
+ persist();closeSubtask();render();
+}
+
+function deleteSub(pid,sid){if(!requireWrite())return;
+ const p=projects.find(x=>x.id===pid),s=p?.subs.find(x=>x.id===sid);if(!p||!s)return;
+ if(!confirm(`Excluir a tarefa "${s.name}"? Esta ação não poderá ser desfeita.`))return;
+ p.subs=p.subs.filter(x=>x.id!==sid);
+ syncProjectProgressFromTasks(p);
+ persist();render();
+}
+function loadDemo(){
+ if(projects.some(p=>p.id===990001)){alert('O exemplo já foi carregado.');return}
+ const p={id:990001,name:'AREA B - WIFI (EXEMPLO)',owner:users[0]?.name||'JUCINEI ANDRADE',priority:'Mandatória',start:'2026-11-09',end:'2026-12-31',status:'EM ANDAMENTO',progress:25,comment:'Exemplo para testar o cadastro separado de projeto e tarefas.',subs:[
+ {id:990011,name:'Realizar Site Survey',owner:users[0]?.name||'',progress:100,status:'CONCLUÍDO',start:'2026-11-09',end:'2026-11-12',completedAt:'2026-11-12',done:true,history:[{date:'12/11/2026',author:'Exemplo',note:'Levantamento concluído.'}]},
+ {id:990012,name:'Instalar infraestrutura nos postes',owner:users[0]?.name||'',progress:0,status:'AGUARDANDO',start:'2026-11-16',end:'2026-12-10',completedAt:'',done:false,history:[]}
+ ]};
+ projects.unshift(p);persist();render();alert('Projeto de exemplo carregado. Você pode editar o projeto e incluir novas tarefas pelos botões da coluna Ações.');
+}
+function clearFilters(){$('search').value='';$('statusFilter').value='ATIVOS';$('priorityFilter').value='';if($('typeFilter'))$('typeFilter').value='';$('projectSort').value='priority';sortDirection='asc';$('sortDirectionButton').textContent='↑ Crescente';render()}
+
+function openUsers(){
+ if(!canManage()){alert('Seu perfil não permite gerenciar usuários.');return}
+ renderUsers();resetUserForm();$('usersDialog').showModal()
+}
+function closeUsers(){$('usersDialog').close()}
+function resetUserForm(){
+ $('userForm').reset();$('userEditId').value='';$('userPassword').required=true;
+ $('passwordRequiredMark').textContent='*';$('userPassword').placeholder='Mínimo de 6 caracteres';
+ $('saveUserButton').textContent='＋ Cadastrar usuário';
+}
+function renderUsers(){
+ refreshOwnerSelects();
+ $('usersList').innerHTML=users.length?users.map(u=>`<div class="user-item"><div><strong>${esc(u.name)}</strong><small>Login: ${esc(u.username||'Não configurado')} · ${esc(u.email||'Sem e-mail')} · ${esc(u.role||'Colaborador')} · ${esc(u.department||'Sem área')}</small></div><div style="display:flex;gap:5px">${u.isPrimaryAdmin?'':`<button type="button" class="icon-btn" title="Editar usuário" onclick="editUser('${encodeURIComponent(String(u.id))}')">✎</button><button type="button" class="icon-btn" title="Excluir usuário" onclick="deleteUser('${encodeURIComponent(String(u.id))}')">🗑</button>`}</div></div>`).join(''):'<div class="user-empty">Nenhum usuário cadastrado.</div>';
+}
+function editUser(encodedId){
+ const id=decodeURIComponent(encodedId),u=users.find(x=>String(x.id)===id);if(!u||u.isPrimaryAdmin)return;
+ $('userEditId').value=u.id;$('userName').value=u.name||'';$('userLogin').value=u.username||'';
+ $('userEmail').value=u.email||'';$('userRole').value=u.role||'Colaborador';$('userDepartment').value=u.department||'';
+ $('userPassword').value='';$('userPassword').required=false;$('passwordRequiredMark').textContent='';
+ $('userPassword').placeholder='Em branco mantém a senha atual';$('saveUserButton').textContent='Salvar alterações';
+}
+function saveUser(e){
+ e.preventDefault();if(!canManage()){alert('Acesso não permitido.');return}
+ const id=$('userEditId').value, name=$('userName').value.trim(),username=$('userLogin').value.trim();
+ const password=$('userPassword').value;
+ if(!name||!username)return;
+ if(users.some(u=>String(u.id)!==String(id)&&String(u.username||'').toLowerCase()===username.toLowerCase())){alert('Este nome de usuário já está em uso.');return}
+ if(!id&&!password){alert('Informe uma senha para o novo usuário.');return}
+ if(password&&password.length<6){alert('A senha deve ter pelo menos 6 caracteres.');return}
+ const data={name,username,email:$('userEmail').value.trim(),role:$('userRole').value,department:$('userDepartment').value.trim()};
+ if(id){
+  const u=users.find(x=>String(x.id)===String(id));if(!u)return;
+  Object.assign(u,data);if(password)u.password=password;
+ }else users.push({id:Date.now(),...data,password,createdAt:new Date().toISOString()});
+ saveUsers();resetUserForm();renderUsers();
+}
+function deleteUser(encodedId){
+ if(!canManage())return;
+ const id=decodeURIComponent(encodedId),u=users.find(x=>String(x.id)===id);if(!u||u.isPrimaryAdmin){alert('A conta principal Admin não pode ser excluída.');return}
+ if(!confirm(`Excluir o usuário "${u.name}"?`))return;
+ users=users.filter(x=>String(x.id)!==id);saveUsers();renderUsers()
+}
+
+function openStatuses(){if(!requireManage())return;
+ renderStatuses();$('statusForm').reset();$('statusEditOriginal').value='';
+ $('statusName').value='';applyStatusPreset('#fff7df','#9b7100');
+ $('statusSaveButton').textContent='＋ Cadastrar status';$('statusesDialog').showModal();
+}
+function closeStatuses(){$('statusesDialog').close()}
+function renderStatuses(){
+ $('statusesList').innerHTML=statuses.map(st=>{
+  const c=getStatusStyle(st);
+  return `<div class="user-item"><div><strong><span class="pill" style="background:${c.bg};color:${c.text}">${esc(st)}</span></strong><small>${projects.filter(p=>p.status===st).length} projeto(s) · ${projects.reduce((n,p)=>n+(p.subs||[]).filter(t=>(t.status||(t.done?'CONCLUÍDO':'AGUARDANDO'))===st).length,0)} tarefa(s)</small></div><div class="status-actions"><button type="button" class="icon-btn" title="Editar status" onclick="editStatus(decodeURIComponent('${encodeURIComponent(st)}'))">✎</button><button type="button" class="icon-btn" title="Excluir status" onclick="deleteStatus(decodeURIComponent('${encodeURIComponent(st)}'))">🗑</button></div></div>`;
+ }).join('');
+}
+function editStatus(oldName){
+ $('statusEditOriginal').value=oldName;$('statusName').value=oldName;
+ const c=getStatusStyle(oldName);$('statusBgColor').value=c.bg;$('statusTextColor').value=c.text;
+ $('statusSaveButton').textContent='Salvar alteração';updateStatusPreview();$('statusName').focus();
+}
+function saveStatus(e){if(!requireManage())return;
+ e.preventDefault();
+ const original=$('statusEditOriginal').value.trim(),name=$('statusName').value.trim().toLocaleUpperCase('pt-BR');
+ const bg=$('statusBgColor').value,textColor=$('statusTextColor').value;
+ if(!name)return;
+ if(statuses.some(x=>x.toLocaleLowerCase('pt-BR')===name.toLocaleLowerCase('pt-BR')&&x!==original)){alert('Já existe um status com esse nome.');return}
+ if(original){
+  statuses=statuses.map(x=>x===original?name:x);
+  const oldStyle=statusStyles[original]||getStatusStyle(original);delete statusStyles[original];
+  statusStyles[name]={bg,text:textColor};
+  projects.forEach(p=>{if(p.status===original)p.status=name;(p.subs||[]).forEach(t=>{if(t.status===original)t.status=name})});
+ }else{
+  statuses.push(name);statusStyles[name]={bg,text:textColor};
+ }
+ persistStatuses();persist();$('statusForm').reset();$('statusEditOriginal').value='';
+ $('statusSaveButton').textContent='＋ Cadastrar status';applyStatusPreset('#fff7df','#9b7100');
+ renderStatuses();render();
+}
+function deleteStatus(name){if(!requireManage())return;
+ if(statuses.length<=1){alert('Mantenha pelo menos um status cadastrado.');return}
+ const used=projects.some(p=>p.status===name||(p.subs||[]).some(t=>(t.status||(t.done?'CONCLUÍDO':'AGUARDANDO'))===name));
+ if(used){alert('Este status está sendo utilizado por um projeto ou tarefa. Altere esses registros antes de excluí-lo.');return}
+ if(!confirm(`Excluir o status "${name}"?`))return;
+ statuses=statuses.filter(x=>x!==name);delete statusStyles[name];persistStatuses();renderStatuses();render();
+}
+
+function excelLibraryReady(){
+ if(typeof XLSX!=='undefined')return true;
+ alert('A biblioteca de Excel não foi carregada. Verifique sua conexão com a internet e tente novamente.');
+ return false;
+}
+function excelDate(value){
+ if(value===null||value===undefined||value==='')return '';
+ if(value instanceof Date&&!isNaN(value))return value.toISOString().slice(0,10);
+ if(typeof value==='number'&&typeof XLSX!=='undefined'){
+  const d=XLSX.SSF.parse_date_code(value);
+  if(d)return `${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`;
+ }
+ const text=String(value).trim();
+ if(/^\d{4}-\d{2}-\d{2}$/.test(text))return text;
+ const br=text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+ if(br)return `${br[3]}-${br[2].padStart(2,'0')}-${br[1].padStart(2,'0')}`;
+ return text;
+}
+function excelBool(value){
+ if(typeof value==='boolean')return value;
+ return ['SIM','S','TRUE','1','YES'].includes(String(value??'').trim().toUpperCase());
+}
+function safeJson(value,fallback){
+ try{return value?JSON.parse(value):fallback}catch(e){return fallback}
+}
+function exportExcel(){
+ if(!requireManage())return;
+ if(!excelLibraryReady())return;
+ const projectRows=projects.map(p=>({
+  'ID Iniciativa':p.id,'Tipo de iniciativa':p.type||'PROJETO','Nome da iniciativa':p.name||'','Resumo':p.summary||'','Responsável':p.owner||'',
+  'Prioridade':p.priority||'','Data início':p.start||'','Previsão fim':p.end||'','Status':p.status||'',
+  'Progresso (%)':Number(p.progress)||0,'Progresso automático':p.autoProgress?'SIM':'NÃO',
+  'Data conclusão':p.completedAt||'','Atividades em finais de semana':p.workWeekends?'SIM':'NÃO',
+  'Comentário':p.comment||'','Dados adicionais (não editar)':JSON.stringify(Object.fromEntries(Object.entries(p).filter(([k])=>!['id','type','name','summary','owner','priority','start','end','status','progress','autoProgress','completedAt','workWeekends','comment','subs'].includes(k))))
+ }));
+ const taskRows=[];
+ projects.forEach(p=>(p.subs||[]).forEach(t=>taskRows.push({
+  'ID Tarefa':t.id,'ID Projeto':p.id,'Projeto':p.name||'','Nome da tarefa':t.name||'','Responsável':t.owner||'',
+  'Progresso (%)':Number(t.progress??(t.done?100:0)),'Status':t.status||(t.done?'CONCLUÍDO':'AGUARDANDO'),
+  'Data início':t.start||'','Previsão fim':t.end||'','Data conclusão':t.completedAt||'',
+  'Concluída':t.done?'SIM':'NÃO','Histórico (não editar)':JSON.stringify(t.history||[]),
+  'Dados adicionais (não editar)':JSON.stringify(Object.fromEntries(Object.entries(t).filter(([k])=>!['id','name','owner','progress','status','start','end','completedAt','done','history'].includes(k))))
+ })));
+ const wb=XLSX.utils.book_new();
+ const addSheet=(name,rows)=>XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),name);
+ addSheet('Projetos',projectRows);
+ addSheet('Tarefas',taskRows);
+ addSheet('Status',statuses.map(name=>({'Status':name,'Estilo (não editar)':JSON.stringify(statusStyles[name]||{})})));
+ addSheet('Usuarios',(users||[]).map(u=>({'Usuário':u.name||'','Dados do usuário (não editar)':JSON.stringify(u)})));
+ // A pauta da DAILY também faz parte da base e acompanha o backup.
+ const dailyStore=getDailyStore();
+ addSheet('Daily',Object.entries(dailyStore).map(([data,registro])=>({
+  'Data':data,'Dados da pauta (não editar)':JSON.stringify(registro||{})
+ })));
+ XLSX.writeFile(wb,'Base_Projetos_TI.xlsx',{compression:true});
+}
+function importExcelFile(file){
+ if(!excelLibraryReady())return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const wb=XLSX.read(reader.result,{type:'array',cellDates:true});
+   if(!wb.SheetNames.includes('Projetos'))throw new Error('A aba Projetos não foi encontrada.');
+   const rows=XLSX.utils.sheet_to_json(wb.Sheets['Projetos'],{defval:''});
+   const taskRows=wb.SheetNames.includes('Tarefas')?XLSX.utils.sheet_to_json(wb.Sheets['Tarefas'],{defval:''}):[];
+   const tasksByProject=new Map();
+   taskRows.forEach(r=>{
+    const pid=String(r['ID Projeto']);
+    const extra=safeJson(r['Dados adicionais (não editar)'],{});
+    const task={...extra,id:r['ID Tarefa']!==''?r['ID Tarefa']:Date.now()+Math.floor(Math.random()*100000),
+     name:String(r['Nome da tarefa']||''),owner:String(r['Responsável']||''),
+     progress:Math.max(0,Math.min(100,Number(r['Progresso (%)'])||0)),
+     status:(String(r['Status']||'AGUARDANDO').trim().toLocaleUpperCase('pt-BR')==='PENDENTE'?'AGUARDANDO':String(r['Status']||'AGUARDANDO')),start:excelDate(r['Data início']),end:excelDate(r['Previsão fim']),
+     completedAt:excelDate(r['Data conclusão']),done:excelBool(r['Concluída']),
+     history:safeJson(r['Histórico (não editar)'],[])};
+    if(task.status==='CONCLUÍDO'||task.completedAt){task.status='CONCLUÍDO';task.done=true;task.progress=100}
+    if(!tasksByProject.has(pid))tasksByProject.set(pid,[]);
+    tasksByProject.get(pid).push(task);
+   });
+   const imported=rows.map(r=>{
+    const extra=safeJson(r['Dados adicionais (não editar)'],{});
+    const id=r['ID Projeto']!==''?r['ID Projeto']:Date.now()+Math.floor(Math.random()*100000);
+    const p={...extra,id,name:String(r['Nome do projeto']||''),summary:String(r['Resumo']||''),
+     owner:String(r['Responsável']||''),priority:String(r['Prioridade']||'Média'),
+     start:excelDate(r['Data início']),end:excelDate(r['Previsão fim']),status:String(r['Status']||'AGUARDANDO'),
+     progress:Math.max(0,Math.min(100,Number(r['Progresso (%)'])||0)),autoProgress:excelBool(r['Progresso automático']),
+     completedAt:excelDate(r['Data conclusão']),workWeekends:excelBool(r['Atividades em finais de semana']),
+     comment:String(r['Comentário']||''),subs:tasksByProject.get(String(id))||[]};
+    if(p.completedAt){p.status='CONCLUÍDO';p.progress=100}
+    return p;
+   });
+   if(!imported.length)throw new Error('A planilha não contém projetos.');
+   projects=imported;
+   if(wb.SheetNames.includes('Status')){
+    const sr=XLSX.utils.sheet_to_json(wb.Sheets['Status'],{defval:''});
+    if(sr.length){statuses=sr.map(r=>String(r.Status||'').trim()).filter(Boolean);
+     statusStyles={...DEFAULT_STATUS_STYLES};
+     sr.forEach(r=>{if(r.Status)statusStyles[r.Status]={...statusStyles[r.Status],...safeJson(r['Estilo (não editar)'],{})}});
+     persistStatuses();}
+   }
+   if(wb.SheetNames.includes('Usuarios')){
+    const ur=XLSX.utils.sheet_to_json(wb.Sheets['Usuarios'],{defval:''});
+    const importedUsers=ur.map(r=>safeJson(r['Dados do usuário (não editar)'],null)).filter(Boolean);
+    if(importedUsers.length){users=importedUsers;saveUsers();}
+   }
+   if(wb.SheetNames.includes('Daily')){
+    const dr=XLSX.utils.sheet_to_json(wb.Sheets['Daily'],{defval:''});
+    const restoredDaily={};
+    dr.forEach(r=>{const key=String(r['Data']||'').trim();if(key)restoredDaily[key]=safeJson(r['Dados da pauta (não editar)'],{});});
+    localStorage.setItem(DAILY_STORAGE_KEY,JSON.stringify(restoredDaily));
+   }
+   projects.forEach(p=>{p.type=p.type||'PROJETO';p.summary=p.summary||'';p.subs=p.subs||[]});
+   persist();render();
+   alert(`Importação concluída! ${projects.length} projeto(s) e ${taskRows.length} tarefa(s) importados.\n${wb.SheetNames.includes('Daily')?'As pautas da DAILY também foram restauradas.':'A planilha não possui a aba Daily; as pautas existentes foram mantidas.'}`);
+  }catch(err){console.error(err);alert('Não foi possível importar a planilha. Preserve os nomes das abas e os cabeçalhos da primeira linha. Detalhe: '+(err.message||'arquivo inválido'))}
+ };
+ reader.onerror=()=>alert('Erro ao ler o arquivo selecionado.');
+ reader.readAsArrayBuffer(file);
+}
+function importData(e){
+ if(!requireManage())return;
+ const file=e.target.files?.[0];if(!file)return;
+ if(!confirm('A importação substituirá a base de projetos e tarefas atualmente carregada no sistema. Para evitar perda de alterações, exporte a base atual antes de continuar. Deseja prosseguir?')){e.target.value='';return}
+ const ext=(file.name.split('.').pop()||'').toLowerCase();
+ if(ext==='json'){
+  const reader=new FileReader();
+  reader.onload=()=>{try{
+   const data=JSON.parse(reader.result);
+   if(Array.isArray(data))projects=data;
+   else if(data&&Array.isArray(data.projects)){
+    projects=data.projects;
+    if(Array.isArray(data.statuses)){statuses=data.statuses;statusStyles={...DEFAULT_STATUS_STYLES};persistStatuses()}
+    else if(data.statuses&&Array.isArray(data.statuses.names)){statuses=data.statuses.names;statusStyles={...DEFAULT_STATUS_STYLES,...(data.statuses.styles||{})};persistStatuses()}
+    if(Array.isArray(data.users)){users=data.users;saveUsers()}
+   }else throw Error('Formato JSON inválido.');
+   projects.forEach(p=>{p.type=p.type||'PROJETO';p.summary=p.summary||'';p.subs=p.subs||[]});
+   persist();render();alert('Backup JSON importado com sucesso!');
+  }catch(err){alert('Não foi possível importar o JSON: '+err.message)}
+  e.target.value='';
+  };
+  reader.readAsText(file);
+ }else importExcelFile(file);
+ e.target.value='';
+}
+
+const DAILY_STORAGE_KEY='daily_suporte_infra_ti_v1';
+const DAILY_FIELDS=['dailyLead','dailyPeople','dailyDone','dailyPriorities','dailyTickets','dailyProjects','dailyBlockers','dailyDecisions'];
+function todayDailyKey(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function dailyDateKey(){return $('dailyDate')?.value||todayDailyKey()}
+function getDailyStore(){try{return JSON.parse(localStorage.getItem(DAILY_STORAGE_KEY)||'{}')}catch(e){return {}}}
+function renderDailyProjectSummaries(){
+ const container=$('dailyProjectSummaries');if(!container)return;
+ const selected=projects.filter(p=>p.showInDaily===true&&!statusIs(derivedStatus(p),'CONCLUÍDO')&&!statusIs(derivedStatus(p),'CANCELADO'));
+ selected.sort((a,b)=>(a.name||'').localeCompare(b.name||'','pt-BR'));
+ container.innerHTML=selected.length?selected.map(p=>{
+  const summary=String(p.summary||'');
+  return `<div class="daily-project-summary"><h4>${esc(p.name||'Iniciativa sem nome')}</h4>${summary.trim()?`<div class="daily-summary-text">${esc(summary)}</div>`:'<div class="daily-projects-empty">Nenhum tópico informado no resumo desta iniciativa.</div>'}</div>`;
+ }).join(''):'<div class="daily-projects-empty">Nenhuma iniciativa foi selecionada para exibição na DAILY.</div>';
+}
+function loadDaily(){
+ const key=dailyDateKey(),data=getDailyStore()[key]||{};
+ DAILY_FIELDS.forEach(id=>{if($(id))$(id).value=data[id]||''});
+ renderDailyProjectSummaries();
+ $('dailySaveStatus').textContent=data.updatedAt?'Última gravação: '+new Date(data.updatedAt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'Nova pauta • ainda não salva';
+}
+function copyPreviousDaily(){
+ const currentKey=dailyDateKey();
+ if(!currentKey){alert('Selecione a data da reunião atual.');return;}
+ const [year,month,day]=currentKey.split('-').map(Number);
+ const previousDate=new Date(year,month-1,day);
+ previousDate.setDate(previousDate.getDate()-1);
+ const previousKey=`${previousDate.getFullYear()}-${String(previousDate.getMonth()+1).padStart(2,'0')}-${String(previousDate.getDate()).padStart(2,'0')}`;
+ const store=getDailyStore(),previous=store[previousKey];
+ if(!previous||!DAILY_FIELDS.some(id=>String(previous[id]||'').trim())){
+  alert(`Não há pauta preenchida para o dia anterior (${previousKey.split('-').reverse().join('/')}).`);
+  return;
+ }
+ const hasCurrent=DAILY_FIELDS.some(id=>String($(id)?.value||'').trim());
+ if(hasCurrent&&!confirm('A pauta atual já possui informações. Deseja substituir todos os campos pelos dados do dia anterior?'))return;
+ DAILY_FIELDS.forEach(id=>{if($(id))$(id).value=previous[id]||'';});
+ saveDaily(false);
+ $('dailySaveStatus').textContent='Dados copiados da pauta de '+previousKey.split('-').reverse().join('/')+' • revise e atualize antes da reunião';
+ alert('Dados do dia anterior copiados. Atualize as informações e salve a pauta.');
+}
+function saveDaily(showMessage=false){
+ if(!$('dailyDate')||!$('dailyDate').value)return;
+ const all=getDailyStore(),key=dailyDateKey(),data={};
+ DAILY_FIELDS.forEach(id=>data[id]=$(id)?.value||'');data.updatedAt=new Date().toISOString();all[key]=data;
+ try{localStorage.setItem(DAILY_STORAGE_KEY,JSON.stringify(all));$('dailySaveStatus').textContent='Salvo às '+new Date(data.updatedAt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});if(showMessage)alert('Pauta da DAILY salva com sucesso!');}
+ catch(e){$('dailySaveStatus').textContent='Não foi possível salvar. Verifique o espaço disponível.';if(showMessage)alert('Não foi possível salvar as anotações neste navegador.');}
+}
+function newDaily(){
+ $('dailyDate').value=todayDailyKey();loadDaily();
+}
+function printDaily(){saveDaily(false);window.print()}
+
+const THEME_KEY='projetos_ti_theme_v1';
+function applyTheme(theme){
+ const selected=theme==='dark'?'dark':'light';
+ document.body.dataset.theme=selected;
+ try{localStorage.setItem(THEME_KEY,selected)}catch(e){}
+ const btn=$('themeToggle');
+ if(btn){btn.innerHTML=selected==='dark'?'☀ <span>Fundo claro</span>':'☾ <span>Fundo escuro</span>';btn.setAttribute('aria-label',selected==='dark'?'Ativar fundo claro':'Ativar fundo escuro');}
+}
+function toggleTheme(){applyTheme(document.body.dataset.theme==='dark'?'light':'dark')}
+try{applyTheme(localStorage.getItem(THEME_KEY)||'light')}catch(e){applyTheme('light')}
+
+$('todayLabel').textContent='Atualizado em '+new Date().toLocaleDateString('pt-BR')+' • Acompanhamento de projetos e demandas controladas';
+const sidebarHeader=document.querySelector('#appShell > header');
+const sidebarBrand=sidebarHeader?.querySelector('.brand');
+const viewNavigation=document.querySelector('#appShell .page-tabs');
+if(sidebarHeader&&sidebarBrand&&viewNavigation)sidebarBrand.insertAdjacentElement('afterend',viewNavigation);
+$('appShell').hidden=true;
+$('loginScreen').hidden=false;
+$('loginUsername').focus();
+setInterval(()=>{
+ if(currentUser&&syncOverdueTaskStatuses())render();
+},60000);
+</script>
+</body>
+</html>
