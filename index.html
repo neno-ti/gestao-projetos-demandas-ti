@@ -645,7 +645,7 @@ body:not([data-theme="dark"]) #appShell .metric .hint{color:#77738c!important}
  <section class="panel">
   <div class="filters">
    <input class="field search" id="search" placeholder="Buscar iniciativa, responsável ou comentário..." oninput="render()">
-   <select class="field" id="typeFilter" onchange="render()"><option value="">Todos os tipos</option><option value="PROJETO">Projetos</option><option value="DEMANDA CONTROLADA">Demandas controladas</option></select>
+   <select class="field" id="typeFilter" onchange="render()"><option value="">Todos os tipos</option><option value="PROJETO">Projetos</option><option value="DEMANDA">Demandas controladas</option></select>
    <select class="field" id="statusFilter" onchange="render()"><option value="TODOS">Todos os status</option><option value="ATIVOS" selected>Ativos (exceto concluídos e cancelados)</option><option value="">Todos os status</option><option value="AGUARDANDO">AGUARDANDO</option><option value="AGUARDANDO">AGUARDANDO</option><option value="EM ANDAMENTO">EM ANDAMENTO</option><option value="CONCLUÍDO">CONCLUÍDO</option><option value="ATRASADO">ATRASADO</option><option value="CANCELADO">CANCELADO</option></select>
    <select class="field" id="priorityFilter" onchange="render()"><option value="">Todas as prioridades</option><option>Mandatória</option><option>Alta</option><option>Média</option><option>Baixa</option></select>
    <div class="sort-controls"><label for="projectSort">Ordenar por</label><select class="field" id="projectSort" onchange="render()"><option value="">Ordem original</option><option value="name">Projeto / demanda</option><option value="summary">Resumo do projeto</option><option value="owner">Responsável</option><option value="priority" selected>Prioridade</option><option value="progress">Progresso</option><option value="status">Status</option><option value="start">Início</option><option value="end">Previsão fim</option></select><button type="button" class="sort-direction" id="sortDirectionButton" onclick="toggleSortDirection()" title="Alternar ordem">↑ Crescente</button></div>
@@ -700,7 +700,7 @@ body:not([data-theme="dark"]) #appShell .metric .hint{color:#77738c!important}
   <div class="modal-body">
    <input type="hidden" id="projectId">
    <div class="form-grid">
-    <div class="form-group"><label>Tipo de iniciativa *</label><select id="initiativeType" required><option value="PROJETO">PROJETO</option><option value="DEMANDA CONTROLADA">DEMANDA CONTROLADA</option></select></div>
+    <div class="form-group"><label>Tipo de iniciativa *</label><select id="initiativeType" required><option value="PROJETO">PROJETO</option><option value="DEMANDA">DEMANDA</option></select></div>
     <div class="form-group"><label>Nome da iniciativa *</label><input id="name" required placeholder="Ex.: Implantação de CFTV - Área B"></div>
     <div class="form-group full"><label>Resumo / principais tópicos (uma informação por linha)</label><textarea id="summary" rows="4"></textarea><small style="color:#667085">Cada linha será exibida separadamente na coluna “Resumo”.</small></div>
      <div class="form-group full"><label style="display:flex;align-items:center;gap:8px;font-weight:500"><input id="showInDaily" type="checkbox"> Exibir na DAILY Suporte &amp; Infra</label><small style="color:#667085">Quando selecionado, o resumo desta iniciativa será apresentado automaticamente em “Projetos em andamento” na DAILY, enquanto o status não for CONCLUÍDO ou CANCELADO.</small></div>
